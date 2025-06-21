@@ -1,0 +1,79 @@
+	plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.1'
+	id 'io.spring.dependency-management' version '1.1.0'
+	id 'org.hidetake.ssh' version '2.11.2' // SSH Plugin
+}
+
+group = 'me.catzy'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+tasks.test {
+    enabled = false
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	jcenter()
+}
+
+dependencies {
+	compileOnly 'org.projectlombok:lombok:1.18.36'
+	annotationProcessor 'org.projectlombok:lombok:1.18.36'
+	
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	/*developmentOnly 'org.springframework.boot:spring-boot-devtools'*/
+//	runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	//runtimeOnly 'mysql:mysql-connector-java:8.1.0'
+	//implementation 'com.mysql:mysql-connector-java'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation 'com.google.code.gson:gson:2.10.1'
+	
+	implementation 'org.springframework.kafka:spring-kafka:3.3.1'
+	
+	//implementation 'com.rometools:rome:1.18.0'
+	//implementation 'com.unfbx:chatgpt-java:1.1.5'
+	
+	implementation group: 'log4j', name: 'log4j', version: '1.2.17'
+	
+	// Selenium Java bindings
+    implementation 'org.seleniumhq.selenium:selenium-java:4.11.0'
+
+    // (Optional) WebDriverManager for managing browser drivers automatically
+    implementation 'io.github.bonigarcia:webdrivermanager:5.5.1'
+
+    // (Optional) JUnit for testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+}
+
+bootRun {
+    environment 'spring.output.ansi.console-available', true
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+processResources.duplicatesStrategy='include'
+
+if (project.hasProperty('rebelAgent')) {
+    bootRun.jvmArgs += rebelAgent
+}
