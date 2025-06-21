@@ -26,11 +26,6 @@ public class ArticleController extends GenericController<Article, Long> {
         super(service);
     }
 	
-	@GetMapping("/start")
-	public void loadArticles() throws Exception {
-		service.checkForAnyNews();
-	}
-	
 	private static interface getEvents extends Article.vMarketEvents, MarketEvent.values {}
 	@JsonView(getEvents.class)
 	@GetMapping("/{id}/marketEvents")

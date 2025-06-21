@@ -1,4 +1,4 @@
-package me.catzy.invester.master.generic;
+package me.catzy.invester.master.exceptions;
 
 import java.util.HashMap;
 import java.util.Map;

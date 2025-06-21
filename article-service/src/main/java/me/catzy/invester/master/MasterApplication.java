@@ -20,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication(exclude = { UserDetailsServiceAutoConfiguration.class })
 @EnableScheduling
 //@EnableCaching
-public class InvesterApplication {
+public class MasterApplication {
 	public static final boolean SMS_CACHE_PRELOAD_DISABLED = false;
 
 	public static void main(String[] args) {
@@ -33,7 +33,7 @@ public class InvesterApplication {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		SpringApplication application = new SpringApplication(new Class[] { InvesterApplication.class });
+		SpringApplication application = new SpringApplication(new Class[] { MasterApplication.class });
 		application.run(args);
 	}
 
@@ -50,7 +50,7 @@ public class InvesterApplication {
 		return new RepositoryRestConfigurer() {
 			@Override
 			public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
-				InvesterApplication.setCorsRegistry(cors);
+				MasterApplication.setCorsRegistry(cors);
 			}
 		};
 	}
@@ -59,7 +59,7 @@ public class InvesterApplication {
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {//
 			public void addCorsMappings(CorsRegistry registry) {
-				InvesterApplication.setCorsRegistry(registry);
+				MasterApplication.setCorsRegistry(registry);
 			}
 		};
 	}

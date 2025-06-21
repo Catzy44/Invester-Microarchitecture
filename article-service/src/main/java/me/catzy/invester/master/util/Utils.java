@@ -1,4 +1,4 @@
-package me.catzy.invester.master;
+package me.catzy.invester.master.util;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
