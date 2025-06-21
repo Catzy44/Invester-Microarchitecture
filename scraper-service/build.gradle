@@ -62,6 +62,8 @@ dependencies {
 
     // (Optional) JUnit for testing
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
 }
 
 bootRun {
