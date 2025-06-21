@@ -12,7 +12,7 @@
 | **Processor** | • Analiza treści przy użyciu AI (DeepSeep R1 32B) <br>• Łączenie newsów z osobami, zdarzeniami i wpływem na rynek | 🖥️ Komputer z mocnym GPU |
 | **Master** | • Przechowuje dane (Hibernate + MySQL) <br>• Udostępnia REST API i panel | 🌐 Serwer / VPS z publicznym IP |
 
-Serwisy komunikują się asynchronicznie przez ⚡**Apache Kafka**⚡.
+Mikroserwisy komunikują się poprzez ⚡**Apache Kafka**⚡.
 
 ---
 
