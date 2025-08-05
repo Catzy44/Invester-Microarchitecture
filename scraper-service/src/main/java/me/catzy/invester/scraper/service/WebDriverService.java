@@ -1,5 +1,7 @@
 package me.catzy.invester.scraper.service;
 
+import java.io.File;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -26,7 +28,8 @@ public class WebDriverService {
 	}
 	
 	private WebDriver loadDriverB() {
-	    System.setProperty("webdriver.chrome.driver", "C:\\Users\\catzy\\Desktop\\invester.local\\undetected_chromedriver.exe");
+		String driverPath = System.getProperty("user.dir") + File.separator + "undetected_chromedriver.exe";
+	    System.setProperty("webdriver.chrome.driver", driverPath);
 	    WebDriver driver = new ChromeDriver(options);
 	    ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})");
 	    return driver;
