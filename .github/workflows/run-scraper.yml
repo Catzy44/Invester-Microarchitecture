@@ -21,7 +21,7 @@ jobs:
       - name: Run bootnow via schtasks detached
         shell: cmd
         run: |
-          schtasks /create /tn Scraper /tr "\"%CD%\bootnow.bat\"" /sc once /st 00:00 /rl highest
+          schtasks /create /tn Scraper /tr "\"%CD%\bootnow.bat\"" /sc once /st 00:00 /rl limited
           schtasks /run /tn Scraper
           timeout /t 5
           schtasks /delete /tn Scraper /f
