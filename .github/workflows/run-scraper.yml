@@ -18,6 +18,6 @@ jobs:
         run: copy "C:\actions-runner\application.properties" "src\main\resources\"
         shell: cmd
       
-      - name: Run bootnow detached
+      - name: Run scraper in background (nohup-like)
         shell: cmd
-        run: start "" cmd /k "bootnow.bat"
+        run: start /B cmd /c bootnow.bat
