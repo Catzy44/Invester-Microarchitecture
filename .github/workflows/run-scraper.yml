@@ -20,4 +20,6 @@ jobs:
       
       - name: Run bootnow detached
         shell: powershell
-        run: Start-Process -FilePath ".\bootnow.bat" -WindowStyle Hidden
+        run: |
+          Write-Host "Starting bootnow.bat in background..."
+          Start-Process -FilePath ".\bootnow.bat" -WindowStyle Hidden
