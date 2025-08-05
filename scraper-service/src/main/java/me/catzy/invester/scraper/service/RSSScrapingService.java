@@ -21,6 +21,7 @@ import org.w3c.dom.NodeList;
 import com.github.benmanes.caffeine.cache.Cache;
 
 import me.catzy.invester.scraper.adapter.kafka.RawArticlePublisher;
+import me.catzy.invester.scraper.config.SourcesConfig;
 import me.catzy.invester.scraper.domain.article.Article;
 import me.catzy.invester.scraper.domain.article.ArticleFactory;
 import me.catzy.invester.scraper.domain.article.ArticleHelper;
@@ -34,23 +35,15 @@ public class RSSScrapingService {
 	@Autowired private RawArticlePublisher articleProd;
 	@Autowired private ArticleFactory articleFactory;
 	@Autowired private Cache<String, Boolean> urlCache;
+	@Autowired private SourcesConfig sourcesConfig;
 	
 	
 	//initial delat zmienić na 1 z powrotem
 	@Scheduled(fixedRate = 10, initialDelay = 0, timeUnit = TimeUnit.MINUTES)
 	public void checkForAnyNews() throws MalformedURLException, Exception {
 		logger.info("checking for news...");
-		
-		List<String> rssFeeds = new ArrayList<String>();
-		rssFeeds.add("https://www.fxstreet.com/rss/news");
-		rssFeeds.add("https://www.fxstreet.com/rss/stocks");
-		rssFeeds.add("https://pl.investing.com/rss/news_14.rss"); //gospodarcze
-		rssFeeds.add("https://pl.investing.com/rss/news_95.rss"); //o wskanikach ekonomicznych
-		rssFeeds.add("https://pl.investing.com/rss/stock_Indices.rss");
-		rssFeeds.add("https://pl.investing.com/rss/commodities_Metals.rss");
-		rssFeeds.add("https://pl.investing.com/rss/market_overview_Fundamental.rss"); //analiza fundamentalna
 
-		for(String s : rssFeeds) {
+		for(String s : sourcesConfig.getSources()) {
 			try {
 				processRSS(new URI(s).toURL());
 			} catch (Exception e) {
