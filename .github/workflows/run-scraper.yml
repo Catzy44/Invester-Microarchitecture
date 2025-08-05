@@ -1,0 +1,20 @@
+name: RUN-SCRAPER
+on:
+  workflow_run:
+    workflows: [ "CI" ]
+    types: [ "completed" ]
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: [ self-hosted, windows ]
+    defaults:
+      run:
+        working-directory: scraper-microservice
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run bootnow detached
+        run: start "" .\bootnow.bat
+        shell: cmd
