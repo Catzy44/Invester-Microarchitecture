@@ -78,7 +78,7 @@ public class RSSScrapingService {
         	if(article.content == null || article.content.length() == 0) {
         		logger.error("Failed to scrape article: " + article.getUrl());
         		continue;
-        	}
+        	}//
         	
         	articleProd.produce(article);
         }
