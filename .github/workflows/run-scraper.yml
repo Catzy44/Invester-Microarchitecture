@@ -13,6 +13,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Copy application.properties
+        run: copy "C:\actions-runner\application.properties" "src\main\resources\"
+        shell: cmd
+      
       - name: Run bootnow detached
         run: start "" .\bootnow.bat
         shell: cmd
