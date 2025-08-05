@@ -12,6 +12,10 @@ jobs:
         working-directory: scraper-service
 
     steps:
+      - name: Run killnow
+        shell: cmd
+        run: call killnow.bat
+        
       - uses: actions/checkout@v4
 
       - name: Copy application.properties
