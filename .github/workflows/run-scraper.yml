@@ -19,5 +19,5 @@ jobs:
         shell: cmd
       
       - name: Run bootnow detached
-        run: start "" .\bootnow.bat
-        shell: cmd
+        shell: powershell
+        run: Start-Process -FilePath ".\bootnow.bat" -WindowStyle Hidden
