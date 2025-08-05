@@ -18,6 +18,10 @@ jobs:
         run: copy "C:\actions-runner\application.properties" "src\main\resources\"
         shell: cmd
       
-      - name: Run bootnow detached
+      - name: Run bootnow via schtasks detached
         shell: cmd
-        run: powershell -NoLogo -NoProfile -Command "Start-Process cmd.exe -ArgumentList '/c start bootnow.bat' -WindowStyle Normal"
+        run: |
+          schtasks /create /tn Scraper /tr "\"%CD%\bootnow.bat\"" /sc once /st 00:00 /rl highest
+          schtasks /run /tn Scraper
+          timeout /t 5
+          schtasks /delete /tn Scraper /f
