@@ -20,4 +20,4 @@ jobs:
       
       - name: Run bootnow detached
         shell: cmd
-        run: start "" cmd /c "bootnow.bat"
+        run: start "" cmd /k "bootnow.bat"
