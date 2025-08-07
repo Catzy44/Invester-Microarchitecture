@@ -1,18 +1,18 @@
-# Invester 🧠📡
+# Invester
 
-**Invester** to rozproszony system mikroserwisowy do pobierania, analizy i prezentacji informacji mogących mieć wpływ na rynek. Skupia się na wpływie newsów oraz aktywności osób publicznych. Zaprojektowany z myślą o wydajności, modularności i łatwej skalowalności.
+**Invester** to rozproszony system mikroserwisowy do pobierania, analizy i prezentacji informacji mogących mieć wpływ na rynek walutowy (konkretnie para EUR/USD). Skupia się na wpływie newsów oraz aktywności osób publicznych. Zaprojektowany z myślą o wydajności, modularności i łatwej skalowalności.
 
 ---
 
 ## Architektura
 
-| Mikroserwis        | Główne zadania | Urządzenie |
+| Mikroserwis        | Główne zadania | Wymagania |
 |--------------------|----------------|------------|
-| **Scraper** | • Pobiera artykuły z RSS i stron (FXStreet, Investing.com) <br>• Używa zmodyfikowanego Selenium do zaciągania pełnej treści | 💻 Laptop (potrzebny jest ekran) |
-| **Processor** | • Analiza treści przy użyciu AI (DeepSeep R1 32B) <br>• Łączenie newsów z osobami, zdarzeniami i wpływem na rynek | 🖥️ Komputer z mocnym GPU |
-| **Master** | • Przechowuje dane (Hibernate + MySQL) <br>• Udostępnia REST API i panel | 🌐 Serwer / VPS z publicznym IP |
+| **Scraper** | • Pobiera artykuły z RSS i stron (FXStreet, Investing.com) <br>• Używa zmodyfikowanego Selenium do zaciągania pełnej treści | Podłączony ekran |
+| **Processor** | • Analiza treści przy użyciu AI (DeepSeep R1 32B) <br>• Łączenie newsów z osobami, zdarzeniami i wpływem na rynek | Mocne GPU (24gb VRAM+) |
+| **Master** | • Przechowuje dane (Hibernate + MySQL) <br>• Udostępnia REST API i panel | Publiczne IP |
 
-Mikroserwisy komunikują się poprzez ⚡**Apache Kafka**⚡.
+Mikroserwisy komunikują się za pośrednictwem ⚡**Apache Kafka**⚡.
 
 ---
 
@@ -26,7 +26,7 @@ Mikroserwisy komunikują się poprzez ⚡**Apache Kafka**⚡.
 
 ---
 
-## Monitorowane podmioty
+## Monitorowane podmioty (WIP)
 
 | Politycy / Liderzy | Instytucje / Firmy | Innowatorzy |
 |--------------------|--------------------|-------------|
