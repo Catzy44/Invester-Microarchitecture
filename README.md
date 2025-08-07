@@ -1,4 +1,4 @@
-# Invester 🧠📡
+# Invester
 
 **Invester** to rozproszony system mikroserwisowy do pobierania, analizy i prezentacji informacji mogących mieć wpływ na rynek. Skupia się na wpływie newsów oraz aktywności osób publicznych. Zaprojektowany z myślą o wydajności, modularności i łatwej skalowalności.
 
