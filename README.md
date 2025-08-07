@@ -6,13 +6,13 @@
 
 ## Architektura
 
-| Mikroserwis        | Główne zadania | Wymagania |
+| Usługa        | Główne zadania | Wymagania |
 |--------------------|----------------|------------|
 | **Scraper** | • Pobiera artykuły z RSS i stron (FXStreet, Investing.com) <br>• Używa zmodyfikowanego Selenium do zaciągania pełnej treści | Podłączony ekran |
 | **Processor** | • Analiza treści przy użyciu AI (DeepSeep R1 32B) <br>• Łączenie newsów z osobami, zdarzeniami i wpływem na rynek | Mocne GPU (24gb VRAM+) |
 | **Master** | • Przechowuje dane (Hibernate + MySQL) <br>• Udostępnia REST API i panel | Publiczne IP |
 
-Mikroserwisy komunikują się poprzez ⚡**Apache Kafka**⚡.
+Mikroserwisy komunikują się za pośrednictwem ⚡**Apache Kafka**⚡.
 
 ---
 
