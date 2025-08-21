@@ -1,4 +1,4 @@
-package me.catzy.invester.scraper.domain.article;
+package me.catzy.invester.scraper.domain.rawarticle;
 
 import java.sql.Timestamp;
 
@@ -22,8 +22,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "article")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-@JsonView({Article.values.class})
-public class Article {
+@JsonView({RawArticle.values.class})
+public class RawArticle {
 	public interface values  extends id{}
 	
 	public static interface id {}

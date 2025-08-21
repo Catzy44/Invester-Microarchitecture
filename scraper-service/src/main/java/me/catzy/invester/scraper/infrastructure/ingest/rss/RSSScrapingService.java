@@ -1,4 +1,4 @@
-package me.catzy.invester.scraper.service;
+package me.catzy.invester.scraper.infrastructure.ingest.rss;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -20,11 +20,12 @@ import org.w3c.dom.NodeList;
 
 import com.github.benmanes.caffeine.cache.Cache;
 
-import me.catzy.invester.scraper.adapter.kafka.RawArticlePublisher;
+import me.catzy.invester.scraper.application.service.factory.ArticleFactory;
 import me.catzy.invester.scraper.config.SourcesConfig;
-import me.catzy.invester.scraper.domain.article.Article;
-import me.catzy.invester.scraper.domain.article.ArticleFactory;
-import me.catzy.invester.scraper.domain.article.ArticleHelper;
+import me.catzy.invester.scraper.domain.rawarticle.RawArticle;
+import me.catzy.invester.scraper.infrastructure.messaging.kafka.RawArticlePublisher;
+import me.catzy.invester.scraper.infrastructure.scraping.parser.ArticleParser;
+import me.catzy.invester.scraper.infrastructure.scraping.selenium.WebDriverService;
 import me.catzy.invester.scraper.util.Utils;
 
 @Service
@@ -55,9 +56,9 @@ public class RSSScrapingService {
 	}
 	
 	public void processRSS(URL url) throws Exception {
-		NodeList items = ArticleHelper.loadDoc(url);
+		NodeList items = ArticleParser.loadDoc(url);
         
-        List<Article> articles = new ArrayList<Article>();
+        List<RawArticle> articles = new ArrayList<RawArticle>();
 
         for (int i = 0; i < items.getLength(); i++) {
         	if(!(items.item(i) instanceof Element)) {
@@ -67,7 +68,7 @@ public class RSSScrapingService {
 	        articles.add(articleFactory.fromRssElement(item));
         }
         
-        for(Article article : articles) {
+        for(RawArticle article : articles) {
         	if(urlCache.getIfPresent(article.getUrl()) != null) {
         		continue;
         	}
@@ -84,7 +85,7 @@ public class RSSScrapingService {
         }
 	}
 	
-	private String scrapeArticleContent(Article a) {
+	private String scrapeArticleContent(RawArticle a) {
 		try {
 			WebDriver driver = serviceWeb.get();
 

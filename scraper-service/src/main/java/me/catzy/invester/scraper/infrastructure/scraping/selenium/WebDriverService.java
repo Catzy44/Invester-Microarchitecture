@@ -1,4 +1,4 @@
-package me.catzy.invester.scraper.service;
+package me.catzy.invester.scraper.infrastructure.scraping.selenium;
 
 import java.io.File;
 

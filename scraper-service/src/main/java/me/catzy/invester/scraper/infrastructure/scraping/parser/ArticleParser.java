@@ -1,4 +1,4 @@
-package me.catzy.invester.scraper.domain.article;
+package me.catzy.invester.scraper.infrastructure.scraping.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,9 +20,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import me.catzy.invester.scraper.service.RSSScrapingService;
+import me.catzy.invester.scraper.infrastructure.ingest.rss.RSSScrapingService;
 
-public class ArticleHelper {
+public class ArticleParser {
 	private static final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	private static final Logger logger = LoggerFactory.getLogger(RSSScrapingService.class);
 	
