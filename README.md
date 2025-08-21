@@ -1,55 +1,53 @@
 # Invester
 
-**Invester** to rozproszony system mikroserwisowy do pobierania, analizy i prezentacji informacji mogących mieć wpływ na rynek walutowy (konkretnie para EUR/USD). Skupia się na wpływie newsów oraz aktywności osób publicznych. Zaprojektowany z myślą o wydajności, modularności i łatwej skalowalności.
+**Invester** is a distributed microservices system for collecting, analyzing, and presenting information that may affect the currency market (specifically the EUR/USD pair). It focuses on the impact of news and public figures' activity. Designed for performance, modularity, and easy scalability.
 
 ---
 
-## Architektura
+## Architecture
 
-| Mikroserwis        | Główne zadania | Wymagania |
-|--------------------|----------------|------------|
-| **Scraper** | • Pobiera artykuły z RSS i stron (FXStreet, Investing.com) <br>• Używa zmodyfikowanego Selenium do zaciągania pełnej treści | Podłączony ekran |
-| **Processor** | • Analiza treści przy użyciu AI (DeepSeep R1 32B) <br>• Łączenie newsów z osobami, zdarzeniami i wpływem na rynek | Mocne GPU (24gb VRAM+) |
-| **Master** | • Przechowuje dane (Hibernate + MySQL) <br>• Udostępnia REST API i panel | Publiczne IP |
+| Microservice        | Main tasks | Requirements |
+|---------------------|------------|--------------|
+| **Scraper** | • Collects articles from RSS and websites (FXStreet, Investing.com) <br>• Uses modified Selenium to fetch full content | Connected display |
+| **Processor** | • Content analysis using AI (DeepSeep R1 32B) <br>• Links news with people, events, and market impact | Powerful GPU (24GB VRAM+) |
+| **Master** | • Stores data (Hibernate + MySQL) <br>• Exposes REST API and dashboard | Public IP |
 
-Mikroserwisy komunikują się za pośrednictwem ⚡**Apache Kafka**⚡.
-
----
-
-## Funkcje
-
-- Automatyczne pobieranie i parsowanie newsów gospodarczych  
-- Analiza sentymentu i klasyfikacja treści przez AI  
-- Identyfikacja i monitoring wpływowych osób oraz tematów  
-- Centralny dashboard z REST API  
-- Gotowość do skalowania dzięki architekturze mikroserwisowej  
+Microservices communicate via ⚡**Apache Kafka**⚡.
 
 ---
 
-## Monitorowane podmioty (WIP)
+## Features
 
-| Politycy / Liderzy | Instytucje / Firmy | Innowatorzy |
-|--------------------|--------------------|-------------|
-| Donald Trump       | FED / SEC          | Sam Altman (OpenAI) |
-| Joe Biden          | BlackRock / Vanguard| Elon Musk (Tesla, SpaceX) |
-| Xi Jinping         | Apple / Nvidia     | Christine Lagarde (ECB) |
-| Vladimir Putin     | —                  | Jerome Powell (FED) |
+- Automatic downloading and parsing of economic news  
+- Sentiment analysis and content classification via AI  
+- Identification and monitoring of influential people and topics  
+- Central dashboard with REST API  
+- Scalability-ready thanks to microservice architecture  
 
 ---
 
-## Technologie
+## Monitored entities (WIP)
+
+| Politicians / Leaders | Institutions / Companies | Innovators |
+|------------------------|--------------------------|------------|
+| Donald Trump           | FED / SEC                | Sam Altman (OpenAI) |
+| Joe Biden              | BlackRock / Vanguard     | Elon Musk (Tesla, SpaceX) |
+| Xi Jinping             | Apple / Nvidia           | Christine Lagarde (ECB) |
+| Vladimir Putin         | —                        | Jerome Powell (FED) |
+
+---
+
+## Technologies
 
 - Java 17 + Spring Boot  
 - Apache Kafka  
-- Selenium WebDriver (przerobiony w celu uniknięcia wykrycia) 
+- Selenium WebDriver (modified to avoid detection)  
 - MySQL (ORM: Hibernate)  
-- Caffeine Cache 
-- React (dashboard – w trakcie budowy)  
+- Caffeine Cache  
+- React (dashboard – under development)  
 
 ---
 
 ## Diagram
 
 ![Invester Architecture](https://github.com/user-attachments/assets/16054f71-d5b3-4f09-9c4c-03226c5e79a4)
-
----
