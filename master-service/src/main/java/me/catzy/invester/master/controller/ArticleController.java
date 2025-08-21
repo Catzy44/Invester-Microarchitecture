@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import me.catzy.invester.master.application.service.ArticleService;
 import me.catzy.invester.master.domain.article.Article;
 import me.catzy.invester.master.domain.marketEvent.MarketEvent;
 import me.catzy.invester.master.generic.GenericController;
 import me.catzy.invester.master.repository.ArticleRepository;
-import me.catzy.invester.master.service.ArticleService;
 
 @RestController
 @RequestMapping({ "/articles"})

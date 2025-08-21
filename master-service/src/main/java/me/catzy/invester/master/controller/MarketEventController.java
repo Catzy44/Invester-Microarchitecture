@@ -16,11 +16,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.catzy.invester.master.application.service.MarketEventService;
 import me.catzy.invester.master.domain.marketEvent.MarketEvent;
 import me.catzy.invester.master.generic.GenericController;
 import me.catzy.invester.master.repository.MarketEventRepository;
 import me.catzy.invester.master.repository.MarketEventRepository.EstimationDTO;
-import me.catzy.invester.master.service.MarketEventService;
 
 @RestController
 @RequestMapping({ "/marketEvents"})

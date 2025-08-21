@@ -1,20 +1,20 @@
-package me.catzy.invester.master.adapter.kafka;
+package me.catzy.invester.master.infrastructure.messaging.kafka;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import me.catzy.invester.processor.domain.article.Article;
-import me.catzy.invester.processor.service.MarketEventService;
+import me.catzy.invester.master.application.service.ProcessingJobService;
+import me.catzy.invester.master.domain.article.Article;
 
 @Component
 public class RawArticleConsumer {
-	@Autowired MarketEventService service;
+	@Autowired ProcessingJobService service;
 	
 	//@KafkaListener(topics = "article-raw", containerFactory = "articleRawFactory")
     //public void onMarketEvent(ConsumerRecord<String, Article> record) {
 	@KafkaListener(topics = "article-raw")
 	public void onMarketEvent(Article article) {
-		service.processArticle(article);
+		service.handleRawArticle(article);
     }
 }

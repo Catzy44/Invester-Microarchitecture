@@ -8,6 +8,6 @@ import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AIMessage;
 
 @Getter
 @Setter
-public class ProcessingJob {
+public class AIProcessingJobMessage {
 	private List<AIMessage> messages;
 }
