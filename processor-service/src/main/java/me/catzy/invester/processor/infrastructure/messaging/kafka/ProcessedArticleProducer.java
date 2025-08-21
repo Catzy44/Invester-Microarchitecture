@@ -1,4 +1,4 @@
-package me.catzy.invester.processor.adapter.kafka;
+package me.catzy.invester.processor.infrastructure.messaging.kafka;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;

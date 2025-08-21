@@ -1,4 +1,4 @@
-package me.catzy.invester.processor.service;
+package me.catzy.invester.processor.application.service;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -10,12 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import me.catzy.invester.processor.adapter.kafka.ProcessedArticleProducer;
 import me.catzy.invester.processor.domain.article.Article;
 import me.catzy.invester.processor.domain.marketEvent.MarketEvent;
-import me.catzy.invester.processor.service.LMStudioService.AICompletion;
-import me.catzy.invester.processor.service.LMStudioService.AIMessage;
-import me.catzy.invester.processor.service.LMStudioService.AIResponse;
+import me.catzy.invester.processor.infrastructure.ai.lmstudio.LMStudioClient;
+import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AICompletion;
+import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AIMessage;
+import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AIResponse;
+import me.catzy.invester.processor.infrastructure.messaging.kafka.ProcessedArticleProducer;
 
 @Service
 public class MarketEventService {
@@ -24,7 +25,7 @@ public class MarketEventService {
 	private static final Logger logger = LoggerFactory.getLogger(MarketEventService.class);
 	
 	@Autowired private ProcessedArticleProducer articleProducer;
-	@Autowired private LMStudioService serviceLM;
+	@Autowired private LMStudioClient serviceLM;
 	
 	public void processArticle(Article a) {
 		logger.info("AI processing ID:" + a.getId() + ", title:"+a.getTitle());

@@ -14,5 +14,3 @@ taskkill /f /im undetected_chromedriver.exe
 taskkill /f /im chrome.exe
 
 timeout /t 5 /nobreak >nul
-
-echo asdf
