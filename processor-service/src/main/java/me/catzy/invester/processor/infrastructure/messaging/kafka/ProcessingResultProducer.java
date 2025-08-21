@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import me.catzy.invester.processor.application.dto.ProcessingResult;
+import me.catzy.invester.processor.application.dto.AIProcessingResult;
 
 @Component
 public class ProcessingResultProducer {
-	@Autowired private KafkaTemplate<String, ProcessingResult> templateArticle;
+	@Autowired private KafkaTemplate<String, AIProcessingResult> templateArticle;
 	
-	public void produce(ProcessingResult result) {
+	public void produce(AIProcessingResult result) {
 		templateArticle.send("processing-result", result);
 	}
 }

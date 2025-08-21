@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import me.catzy.invester.processor.application.dto.ProcessingJob;
 import me.catzy.invester.processor.application.service.ProcessorService;
+import me.catzy.invester.processor.infrastructure.messaging.kafka.dto.ProcessingJob;
 
 @Component
 public class ProcessingJobConsumer {
@@ -15,6 +15,6 @@ public class ProcessingJobConsumer {
     //public void onMarketEvent(ConsumerRecord<String, Article> record) {
 	@KafkaListener(topics = "processing-job")
 	public void onMarketEvent(ProcessingJob job) {
-		service.process(job);
+		service.process(job.getMessages());
     }
 }

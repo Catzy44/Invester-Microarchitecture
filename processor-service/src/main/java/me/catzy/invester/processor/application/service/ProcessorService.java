@@ -1,15 +1,15 @@
 package me.catzy.invester.processor.application.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import me.catzy.invester.processor.application.dto.ProcessingJob;
-import me.catzy.invester.processor.application.dto.ProcessingResult;
+import me.catzy.invester.processor.application.dto.AIProcessingResult;
 import me.catzy.invester.processor.infrastructure.ai.lmstudio.LMStudioClient;
-import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AICompletion;
-import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AIResponse;
+import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AIMessage;
 import me.catzy.invester.processor.infrastructure.messaging.kafka.ProcessingResultProducer;
 
 @Service
@@ -19,16 +19,14 @@ public class ProcessorService {
 	@Autowired private LMStudioClient serviceLM;
 	@Autowired private ProcessingResultProducer resultProducer;
 	
-	public void process(ProcessingJob job) {
-		AICompletion completion = job.getJob();
+	public void process(List<AIMessage> messages) {
 		logger.debug("AI processing started");
 		
 		for (int i = 0; i < AI_PROCESSING_RETRIES; i++) {
 			try {
-				AIResponse response = serviceLM.askAI(completion);
-				ProcessingResult result = new ProcessingResult(response);
+				AIProcessingResult response = serviceLM.askAI(messages);
+				resultProducer.produce(response);
 				
-				resultProducer.produce(result);
 				logger.debug("AI processing finished");
 				return;
 			} catch (Exception e) {

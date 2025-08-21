@@ -7,6 +7,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +16,10 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AICompletion;
-import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AIResponse;
+import me.catzy.invester.processor.application.dto.AIProcessingResult;
+import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AIMessage;
 import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.LMStudioAPIResponse;
+import me.catzy.invester.processor.infrastructure.ai.lmstudio.mapper.LMStudioCompletionMapper;
 import me.catzy.invester.processor.infrastructure.ai.lmstudio.mapper.LMStudioResponseMapper;
 import me.catzy.invester.processor.util.Utils;
 
@@ -28,6 +30,7 @@ public class LMStudioClient {
 	private static final Logger logger = LoggerFactory.getLogger(LMStudioClient.class);
 	
 	@Autowired LMStudioResponseMapper responseMapper;
+	@Autowired LMStudioCompletionMapper completionMapper;
 	
 	boolean LMStudioWaked = false;
 	private void wakeLMStudioIfNeeded() throws IOException, InterruptedException {
@@ -62,13 +65,13 @@ public class LMStudioClient {
 		
 	}
 	
-	public AIResponse askAI(AICompletion c) throws URISyntaxException, IOException, InterruptedException {
+	public AIProcessingResult askAI(List<AIMessage> messages) throws URISyntaxException, IOException, InterruptedException {
 		wakeLMStudioIfNeeded();
 		
 		// convert AIMessage DTO into JSON String
 		String requestBody = objectMapper
 				.writerWithDefaultPrettyPrinter()
-				.writeValueAsString(c);
+				.writeValueAsString(completionMapper.build(messages));
 
 		//web request to LMStudio (chooosen AI model has to be started first through GUI)
 		HttpRequest request = HttpRequest.newBuilder()
@@ -88,6 +91,6 @@ public class LMStudioClient {
 				.readValue(response.body(), LMStudioAPIResponse.class);
 
 		// try to parse AI response !THROWS!
-		return responseMapper.tryToParseResponse(res);
+		return responseMapper.build(res);
 	}
 }
