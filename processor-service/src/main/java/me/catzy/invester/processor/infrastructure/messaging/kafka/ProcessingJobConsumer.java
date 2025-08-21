@@ -1,5 +1,20 @@
 package me.catzy.invester.processor.infrastructure.messaging.kafka;
 
-public class ProcessingJobConsumer {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
 
+import me.catzy.invester.processor.application.dto.ProcessingJob;
+import me.catzy.invester.processor.application.service.ProcessorService;
+
+@Component
+public class ProcessingJobConsumer {
+@Autowired ProcessorService service;
+	
+	//@KafkaListener(topics = "article-raw", containerFactory = "articleRawFactory")
+    //public void onMarketEvent(ConsumerRecord<String, Article> record) {
+	@KafkaListener(topics = "processing-job")
+	public void onMarketEvent(ProcessingJob job) {
+		service.process(job);
+    }
 }
