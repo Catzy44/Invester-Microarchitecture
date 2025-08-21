@@ -20,7 +20,7 @@ import org.w3c.dom.NodeList;
 
 import com.github.benmanes.caffeine.cache.Cache;
 
-import me.catzy.invester.scraper.application.service.factory.ArticleFactory;
+import me.catzy.invester.scraper.application.factory.ArticleFactory;
 import me.catzy.invester.scraper.config.SourcesConfig;
 import me.catzy.invester.scraper.domain.rawarticle.RawArticle;
 import me.catzy.invester.scraper.infrastructure.messaging.kafka.RawArticlePublisher;

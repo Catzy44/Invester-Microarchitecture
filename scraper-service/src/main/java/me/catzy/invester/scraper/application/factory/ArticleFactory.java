@@ -1,4 +1,4 @@
-package me.catzy.invester.scraper.application.service.factory;
+package me.catzy.invester.scraper.application.factory;
 
 import java.sql.Timestamp;
 
