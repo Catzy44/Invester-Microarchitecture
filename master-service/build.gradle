@@ -78,4 +78,12 @@ processResources.duplicatesStrategy='include'
 
 if (project.hasProperty('rebelAgent')) {
    bootRun.jvmArgs += rebelAgent
+   bootRun.jvmArgs += [
+            "-Drebel.log=true",
+            "-Drebel.log.file=${file("$buildDir/rebel/rebel.log")}"
+        ]
 }
+tasks.register('prepareRebelLogDir') {
+    doLast { file("$buildDir/rebel").mkdirs() }
+}
+bootRun.dependsOn 'prepareRebelLogDir'
