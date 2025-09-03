@@ -2,9 +2,9 @@ package me.catzy.invester.master.application.factory;
 
 import org.springframework.stereotype.Component;
 
+import me.catzy.invester.kafka.messages.AIMessage;
+import me.catzy.invester.kafka.messages.AIProcessingJobMessage;
 import me.catzy.invester.master.domain.article.Article;
-import me.catzy.invester.master.infrastructure.messaging.kafka.dto.AIMessage;
-import me.catzy.invester.master.infrastructure.messaging.kafka.dto.AIProcessingJobMessage;
 
 @Component
 public class ProcessingJobFactory {

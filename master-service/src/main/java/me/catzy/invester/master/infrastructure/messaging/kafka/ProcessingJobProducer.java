@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import me.catzy.invester.master.infrastructure.messaging.kafka.dto.AIProcessingJobMessage;
+import me.catzy.invester.kafka.messages.AIProcessingJobMessage;
 
 @Component
 public class ProcessingJobProducer {

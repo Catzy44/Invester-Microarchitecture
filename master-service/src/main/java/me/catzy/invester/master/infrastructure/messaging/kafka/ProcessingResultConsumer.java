@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import me.catzy.invester.kafka.messages.AIProcessingResultMessage;
 import me.catzy.invester.master.application.service.ProcessingResultService;
-import me.catzy.invester.master.infrastructure.messaging.kafka.dto.AIProcessingResultMessage;
 
 @Component
 public class ProcessingResultConsumer {

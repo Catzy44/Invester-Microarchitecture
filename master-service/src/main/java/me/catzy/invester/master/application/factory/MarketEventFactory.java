@@ -6,8 +6,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import me.catzy.invester.kafka.messages.AIProcessingResultMessage;
 import me.catzy.invester.master.domain.marketEvent.MarketEvent;
-import me.catzy.invester.master.infrastructure.messaging.kafka.dto.AIProcessingResultMessage;
 
 @Component
 public class MarketEventFactory {
