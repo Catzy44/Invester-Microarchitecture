@@ -23,7 +23,7 @@ public interface MarketEventRepository extends JpaRepository<MarketEvent, Long> 
 		Long positive;
 		Long negative;
 	}
-	@Query("SELECT NEW me.catzy.invester.master.objects.marketEvent.MarketEventRepository$EstimationDTO( " +
+	@Query("SELECT NEW me.catzy.invester.master.repository.MarketEventRepository$EstimationDTO( " +
 		       "SUM(CASE WHEN me.type = 1 THEN me.impactPrc ELSE 0 END), " +
 		       "SUM(CASE WHEN me.type = 0 THEN me.impactPrc ELSE 0 END)) " +
 		       "FROM MarketEvent me " +

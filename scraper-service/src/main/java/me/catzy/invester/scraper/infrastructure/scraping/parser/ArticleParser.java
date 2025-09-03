@@ -20,11 +20,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import me.catzy.invester.scraper.infrastructure.ingest.rss.RSSScrapingService;
+import me.catzy.invester.scraper.application.service.ScrapingService;
 
 public class ArticleParser {
 	private static final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-	private static final Logger logger = LoggerFactory.getLogger(RSSScrapingService.class);
+	private static final Logger logger = LoggerFactory.getLogger(ScrapingService.class);
 	
 	public static NodeList loadDoc(URL url) throws ParserConfigurationException, IOException, SAXException {
 		DocumentBuilder builder = factory.newDocumentBuilder();

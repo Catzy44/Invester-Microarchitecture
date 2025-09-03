@@ -9,7 +9,7 @@ import me.catzy.invester.scraper.domain.rawarticle.RawArticle;
 import me.catzy.invester.scraper.infrastructure.scraping.parser.ArticleParser;
 
 @Service
-public class ArticleFactory {
+public class RawArticleFactory {
 	public RawArticle fromRssElement(Element item) {
         RawArticle article = new RawArticle();
         article.title = ArticleParser.getItem(item,"title");

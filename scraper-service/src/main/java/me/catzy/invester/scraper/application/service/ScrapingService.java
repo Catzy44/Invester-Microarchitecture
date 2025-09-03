@@ -1,4 +1,4 @@
-package me.catzy.invester.scraper.infrastructure.ingest.rss;
+package me.catzy.invester.scraper.application.service;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -20,7 +20,7 @@ import org.w3c.dom.NodeList;
 
 import com.github.benmanes.caffeine.cache.Cache;
 
-import me.catzy.invester.scraper.application.factory.ArticleFactory;
+import me.catzy.invester.scraper.application.factory.RawArticleFactory;
 import me.catzy.invester.scraper.config.SourcesConfig;
 import me.catzy.invester.scraper.domain.rawarticle.RawArticle;
 import me.catzy.invester.scraper.infrastructure.messaging.kafka.RawArticlePublisher;
@@ -29,12 +29,12 @@ import me.catzy.invester.scraper.infrastructure.scraping.selenium.WebDriverServi
 import me.catzy.invester.scraper.util.Utils;
 
 @Service
-public class RSSScrapingService {
-	private static final Logger logger = LoggerFactory.getLogger(RSSScrapingService.class);
+public class ScrapingService {
+	private static final Logger logger = LoggerFactory.getLogger(ScrapingService.class);
 	
 	@Autowired private WebDriverService serviceWeb;
 	@Autowired private RawArticlePublisher articleProd;
-	@Autowired private ArticleFactory articleFactory;
+	@Autowired private RawArticleFactory articleFactory;
 	@Autowired private Cache<String, Boolean> urlCache;
 	@Autowired private SourcesConfig sourcesConfig;
 	
