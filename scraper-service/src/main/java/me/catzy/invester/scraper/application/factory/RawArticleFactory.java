@@ -5,13 +5,13 @@ import java.sql.Timestamp;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Element;
 
-import me.catzy.invester.scraper.domain.rawarticle.RawArticle;
+import me.catzy.invester.kafka.messages.RawArticleMessage;
 import me.catzy.invester.scraper.infrastructure.scraping.parser.ArticleParser;
 
 @Service
 public class RawArticleFactory {
-	public RawArticle fromRssElement(Element item) {
-        RawArticle article = new RawArticle();
+	public RawArticleMessage fromRssElement(Element item) {
+		RawArticleMessage article = new RawArticleMessage();
         article.title = ArticleParser.getItem(item,"title");
         article.url = ArticleParser.getItem(item,"link");
         article.content = ArticleParser.getItem(item,"description");

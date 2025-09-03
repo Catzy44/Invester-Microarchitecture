@@ -20,9 +20,9 @@ import org.w3c.dom.NodeList;
 
 import com.github.benmanes.caffeine.cache.Cache;
 
+import me.catzy.invester.kafka.messages.RawArticleMessage;
 import me.catzy.invester.scraper.application.factory.RawArticleFactory;
 import me.catzy.invester.scraper.config.SourcesConfig;
-import me.catzy.invester.scraper.domain.rawarticle.RawArticle;
 import me.catzy.invester.scraper.infrastructure.messaging.kafka.RawArticlePublisher;
 import me.catzy.invester.scraper.infrastructure.scraping.parser.ArticleParser;
 import me.catzy.invester.scraper.infrastructure.scraping.selenium.WebDriverService;
@@ -58,7 +58,7 @@ public class ScrapingService {
 	public void processRSS(URL url) throws Exception {
 		NodeList items = ArticleParser.loadDoc(url);
         
-        List<RawArticle> articles = new ArrayList<RawArticle>();
+        List<RawArticleMessage> articles = new ArrayList<RawArticleMessage>();
 
         for (int i = 0; i < items.getLength(); i++) {
         	if(!(items.item(i) instanceof Element)) {
@@ -68,7 +68,7 @@ public class ScrapingService {
 	        articles.add(articleFactory.fromRssElement(item));
         }
         
-        for(RawArticle article : articles) {
+        for(RawArticleMessage article : articles) {
         	if(urlCache.getIfPresent(article.getUrl()) != null) {
         		continue;
         	}
@@ -85,7 +85,7 @@ public class ScrapingService {
         }
 	}
 	
-	private String scrapeArticleContent(RawArticle a) {
+	private String scrapeArticleContent(RawArticleMessage a) {
 		try {
 			WebDriver driver = serviceWeb.get();
 
