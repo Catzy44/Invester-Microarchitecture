@@ -1,0 +1,2 @@
+rootProject.name = 'invester.master.service'
+includeBuild('../kafka-messages')
