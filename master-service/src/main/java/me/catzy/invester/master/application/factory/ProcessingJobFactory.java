@@ -2,17 +2,17 @@ package me.catzy.invester.master.application.factory;
 
 import org.springframework.stereotype.Component;
 
-import me.catzy.invester.kafka.messages.AIMessage;
-import me.catzy.invester.kafka.messages.AIProcessingJobMessage;
+import me.catzy.invester.kafka.messages.AIMessageEnvelope;
+import me.catzy.invester.kafka.messages.AIProcessingJobEnvelope;
 import me.catzy.invester.master.domain.article.Article;
 
 @Component
 public class ProcessingJobFactory {
 	
-	public AIProcessingJobMessage createFromArticle(Article a) {
-		AIProcessingJobMessage job = new AIProcessingJobMessage();
+	public AIProcessingJobEnvelope createFromArticle(Article a) {
+		AIProcessingJobEnvelope job = new AIProcessingJobEnvelope();
 		
-		AIMessage system = new AIMessage();
+		AIMessageEnvelope system = new AIMessageEnvelope();
 		system.role = "system";
 		
 		system.content = """
@@ -64,7 +64,7 @@ ARTICLE CONTENT:
 		
 		job.getMessages().add(system);
 		
-		AIMessage user = new AIMessage();
+		AIMessageEnvelope user = new AIMessageEnvelope();
 		user.role = "user";
 		user.content = a.getContent();
 		job.getMessages().add(user);

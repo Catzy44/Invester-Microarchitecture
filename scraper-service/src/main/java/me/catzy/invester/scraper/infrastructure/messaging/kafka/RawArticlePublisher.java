@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import me.catzy.invester.kafka.messages.RawArticleMessage;
+import me.catzy.invester.kafka.messages.RawArticleEnvelope;
 
 @Component
 public class RawArticlePublisher {
-	@Autowired private KafkaTemplate<String, RawArticleMessage> kafkaTemplate;
+	@Autowired private KafkaTemplate<String, RawArticleEnvelope> kafkaTemplate;
 	
-	public void produce(RawArticleMessage article) {
+	public void produce(RawArticleEnvelope article) {
 		kafkaTemplate.send("article-raw", article.getUrl(), article);
 	}
 }

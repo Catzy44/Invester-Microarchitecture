@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import me.catzy.invester.kafka.messages.AIProcessingResultMessage;
+import me.catzy.invester.kafka.messages.AIProcessingResultEnvelope;
 import me.catzy.invester.master.application.factory.MarketEventFactory;
 import me.catzy.invester.master.domain.marketEvent.MarketEvent;
 import me.catzy.invester.master.repository.MarketEventRepository;
@@ -17,7 +17,7 @@ public class ProcessingResultService {
 	@Autowired MarketEventFactory factory;
 	@Autowired MarketEventRepository repo;
 	
-	public void handle(AIProcessingResultMessage message) {
+	public void handle(AIProcessingResultEnvelope message) {
 		try {
 			MarketEvent[] marketEvents = factory.parse(message);
 			

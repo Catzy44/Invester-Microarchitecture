@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class AIProcessingResultMessage {
+public class AIProcessingResultEnvelope {
 	private String thinking;
 	private String message;
 }

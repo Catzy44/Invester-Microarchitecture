@@ -28,6 +28,8 @@ repositories {
 }
 
 dependencies {
+	implementation 'me.catzy.invester:invester.kafka.messages'
+
 	compileOnly 'org.projectlombok:lombok:1.18.36'
 	annotationProcessor 'org.projectlombok:lombok:1.18.36'
 	

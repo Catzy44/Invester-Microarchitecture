@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RawArticleMessage {
+public class RawArticleEnvelope {
 	public String url;
 	public String title;
 	public String content;

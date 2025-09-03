@@ -7,6 +7,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AIProcessingJobMessage {
-	private List<AIMessage> messages;
+public class AIProcessingJobEnvelope {
+	private List<AIMessageEnvelope> messages;
 }

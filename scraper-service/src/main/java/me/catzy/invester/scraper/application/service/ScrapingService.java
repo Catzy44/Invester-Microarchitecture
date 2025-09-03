@@ -20,7 +20,7 @@ import org.w3c.dom.NodeList;
 
 import com.github.benmanes.caffeine.cache.Cache;
 
-import me.catzy.invester.kafka.messages.RawArticleMessage;
+import me.catzy.invester.kafka.messages.RawArticleEnvelope;
 import me.catzy.invester.scraper.application.factory.RawArticleFactory;
 import me.catzy.invester.scraper.config.SourcesConfig;
 import me.catzy.invester.scraper.infrastructure.messaging.kafka.RawArticlePublisher;
@@ -58,7 +58,7 @@ public class ScrapingService {
 	public void processRSS(URL url) throws Exception {
 		NodeList items = ArticleParser.loadDoc(url);
         
-        List<RawArticleMessage> articles = new ArrayList<RawArticleMessage>();
+        List<RawArticleEnvelope> articles = new ArrayList<RawArticleEnvelope>();
 
         for (int i = 0; i < items.getLength(); i++) {
         	if(!(items.item(i) instanceof Element)) {
@@ -68,7 +68,7 @@ public class ScrapingService {
 	        articles.add(articleFactory.fromRssElement(item));
         }
         
-        for(RawArticleMessage article : articles) {
+        for(RawArticleEnvelope article : articles) {
         	if(urlCache.getIfPresent(article.getUrl()) != null) {
         		continue;
         	}
@@ -85,7 +85,7 @@ public class ScrapingService {
         }
 	}
 	
-	private String scrapeArticleContent(RawArticleMessage a) {
+	private String scrapeArticleContent(RawArticleEnvelope a) {
 		try {
 			WebDriver driver = serviceWeb.get();
 

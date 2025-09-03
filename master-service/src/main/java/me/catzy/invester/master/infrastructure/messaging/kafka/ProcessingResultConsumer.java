@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import me.catzy.invester.kafka.messages.AIProcessingResultMessage;
+import me.catzy.invester.kafka.messages.AIProcessingResultEnvelope;
 import me.catzy.invester.master.application.service.ProcessingResultService;
 
 @Component
@@ -15,7 +15,7 @@ public class ProcessingResultConsumer {
 	//@KafkaListener(topics = "article-raw", containerFactory = "articleRawFactory")
     //public void onMarketEvent(ConsumerRecord<String, Article> record) {
 	@KafkaListener(topics = "processing-result")
-	public void onMarketEvent(AIProcessingResultMessage job) {
+	public void onMarketEvent(AIProcessingResultEnvelope job) {
 		//service.process(job.getMessages());
 		service.handle(job);
     }
