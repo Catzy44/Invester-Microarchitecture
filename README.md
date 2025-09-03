@@ -1,3 +1,5 @@
+PROJECT REFACTOR IN PROGRESS, PLEASE DON'T MIND THE STRUCTURE.
+
 # Invester
 
 **Invester** is a distributed microservices system for collecting, analyzing, and presenting information that may affect the currency market (specifically the EUR/USD pair). It focuses on the impact of news and public figures' activity. Designed for performance, modularity, and easy scalability.
