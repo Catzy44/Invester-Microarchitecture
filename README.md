@@ -51,5 +51,3 @@ Microservices communicate via ⚡**Apache Kafka**⚡.
 ---
 
 ## Diagram
-
-![Invester Architecture](https://github.com/user-attachments/assets/16054f71-d5b3-4f09-9c4c-03226c5e79a4)
