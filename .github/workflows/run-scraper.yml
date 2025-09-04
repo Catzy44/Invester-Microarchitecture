@@ -18,6 +18,11 @@ jobs:
         continue-on-error: true
         
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          clean: true
+          lfs: true
 
       - name: Copy application.properties
         run: copy "C:\actions-runner\application.properties" "src\main\resources\"
@@ -25,4 +30,4 @@ jobs:
       
       - name: Run bootnow
         shell: cmd
-        run: call boootnohup.bat
+        run: call bootnohup.bat
