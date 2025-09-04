@@ -7,11 +7,8 @@ pid_file="proc.pid"
 stat_file="man.sh.status"
 screenName="InvesterMasterService"
 me=$(whoami)
-mem="6G"
-jarfile="server.jar"
-stopcmd="stop"
+stopcmd="C-c"
 restart_sleep="1"
-VERSION='1.21.5'
 
 function tmux_sessions() {
 	return $(tmux ls | cut -d: -f1)
