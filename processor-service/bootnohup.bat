@@ -1,4 +1,6 @@
 @echo off
+cd /d %~dp0
+
 schtasks /create /tn Processor /tr "\"%CD%\bootnow.bat\"" /sc once /st 00:00 /rl limited
 schtasks /run /tn Processor
 timeout /t 2
