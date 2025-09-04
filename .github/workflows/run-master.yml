@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Run killnow
         shell: bash
-        run: pwd
+        run: ./man.sh stop
         continue-on-error: true
         
       - uses: actions/checkout@v4
@@ -30,4 +30,4 @@ jobs:
       
       - name: Run bootnow
         shell: bash
-        run: man.sh start
+        run: chmod +x man.sh && ./man.sh start
