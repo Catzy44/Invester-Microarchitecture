@@ -22,6 +22,6 @@ public class ProcessingJobConsumer {
 		List<AIMessageEnvelope> messages = job.getMessages();
 		
 		
-		service.process(messages.stream().map(env -> new AIMessage(env.getRole(), env.getContent())).toList());
+		service.process(messages.stream().map(env -> new AIMessage(env.getRole(), env.getContent(), null)).toList());
     }
 }

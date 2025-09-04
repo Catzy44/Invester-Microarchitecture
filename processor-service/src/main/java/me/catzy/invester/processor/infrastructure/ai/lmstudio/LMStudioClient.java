@@ -34,6 +34,8 @@ public class LMStudioClient {
 	
 	boolean LMStudioWaked = false;
 	private void wakeLMStudioIfNeeded() throws IOException, InterruptedException {
+		if(true) return;
+		
 		if(LMStudioWaked) {
 			return;
 		}
@@ -53,7 +55,7 @@ public class LMStudioClient {
 		Thread.sleep(1000);
 		
 		logger.info("loading LLM model...");
-		p = new ProcessBuilder("lms","load","14B","--identifier","kot").start();
+		p = new ProcessBuilder("lms","load","DeepSeek-R1-Distill-Qwen-32B-GGUF","--identifier","kot").start();
 		Utils.dumpUntilExahausted(p.getInputStream());
 		Utils.dumpUntilExahausted(p.getErrorStream());
 		p.waitFor();

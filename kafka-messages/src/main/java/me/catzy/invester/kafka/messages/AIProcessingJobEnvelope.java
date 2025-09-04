@@ -1,5 +1,6 @@
 package me.catzy.invester.kafka.messages;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -12,5 +13,5 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AIProcessingJobEnvelope {
-	private List<AIMessageEnvelope> messages;
+	private List<AIMessageEnvelope> messages = new ArrayList<AIMessageEnvelope>();
 }

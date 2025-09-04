@@ -27,6 +27,13 @@ import me.catzy.invester.master.domain.marketEvent.MarketEvent;
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @JsonView({Article.values.class})
 public class Article {
+	public Article(String url, String title, String content, Timestamp timestamp) {
+		this.url = url;
+		this.title = title;
+		this.content = content;
+		this.timestamp = timestamp;
+	}
+	
 	public interface values  extends id{}
 	
 	public static interface id {}
