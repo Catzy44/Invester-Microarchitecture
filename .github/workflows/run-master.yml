@@ -26,7 +26,7 @@ jobs:
 
       - name: Copy application.properties
         run: cp "/opt/actions-runner/application.properties" "src/main/resources"
-        shell: cmd
+        shell: bash
       
       - name: Run bootnow
         shell: bash
