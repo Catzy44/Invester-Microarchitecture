@@ -30,6 +30,6 @@ public class ArticleController extends GenericController<Article, Long> {
 	@JsonView(getEvents.class)
 	@GetMapping("/{id}/marketEvents")
 	public List<MarketEvent> getEvents(@PathVariable long id) {
-		return repo.findById(id).get().getEvents();
+		return repo.findById(id).get().getEvents();//
 	}
 }
