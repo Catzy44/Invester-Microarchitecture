@@ -13,9 +13,9 @@ public class ProcessingJobFactory {
 		AIProcessingJobEnvelope job = new AIProcessingJobEnvelope();
 		
 		AIMessageEnvelope system = new AIMessageEnvelope();
-		system.role = "system";
+		system.setRole("system");
 		
-		system.content = """
+		system.setContent("""
 You are an AI expert in business problem-solving with unmatched expertise in market dynamics. You will receive a text message (article) to analyze.
 
 Your task is to analyze this text and construct a response in JSON format. 
@@ -58,15 +58,15 @@ This refined prompt ensures clarity, conciseness, and effectiveness in guiding t
 				
 ARTICLE PUBLICATION DATE: {pubdate}
 ARTICLE CONTENT:
-				""";
+				""");
 		
-		system.content = system.content.replace("{pubdate}", a.getTimestamp().toString());
+		system.setContent(system.getContent().replace("{pubdate}", a.getTimestamp().toString()));
 		
 		job.getMessages().add(system);
 		
 		AIMessageEnvelope user = new AIMessageEnvelope();
-		user.role = "user";
-		user.content = a.getContent();
+		user.setRole("user");
+		user.setContent(a.getContent());
 		job.getMessages().add(user);
 		
 		return job;

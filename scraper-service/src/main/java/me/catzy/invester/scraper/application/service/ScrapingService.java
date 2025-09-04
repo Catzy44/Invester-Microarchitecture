@@ -74,9 +74,9 @@ public class ScrapingService {
         	}
         	urlCache.put(article.getUrl(), true);
         	
-        	article.content = scrapeArticleContent(article);
+        	article.setContent(scrapeArticleContent(article));
         	
-        	if(article.content == null || article.content.length() == 0) {
+        	if(article.getContent() == null || article.getContent().length() == 0) {
         		logger.error("Failed to scrape article: " + article.getUrl());
         		continue;
         	}//
@@ -89,7 +89,7 @@ public class ScrapingService {
 		try {
 			WebDriver driver = serviceWeb.get();
 
-			driver.get(a.url);
+			driver.get(a.getUrl());
 
 			// 1
 			List<WebElement> el = driver.findElements(By.id("article"));
@@ -108,7 +108,7 @@ public class ScrapingService {
 			
 			return Utils.extractArticleText(el.get(0));
     	} catch (Exception e) {
-    		logger.error("failed scraping article: " + a.url);
+    		logger.error("failed scraping article: " + a.getUrl());
     		e.printStackTrace();
     	}
 		return null;

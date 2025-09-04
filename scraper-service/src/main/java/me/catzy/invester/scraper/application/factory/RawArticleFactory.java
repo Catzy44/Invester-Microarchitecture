@@ -12,9 +12,10 @@ import me.catzy.invester.scraper.infrastructure.scraping.parser.ArticleParser;
 public class RawArticleFactory {
 	public RawArticleEnvelope fromRssElement(Element item) {
 		RawArticleEnvelope article = new RawArticleEnvelope();
-        article.title = ArticleParser.getItem(item,"title");
-        article.url = ArticleParser.getItem(item,"link");
-        article.content = ArticleParser.getItem(item,"description");
+		
+        article.setTitle(ArticleParser.getItem(item,"title"));
+        article.setUrl(ArticleParser.getItem(item,"link"));
+        article.setContent(ArticleParser.getItem(item,"description"));
         
         String date = item.getElementsByTagName("pubDate").item(0).getTextContent();
         article.setTimestamp(new Timestamp(ArticleParser.parseDate(date).getTime()));

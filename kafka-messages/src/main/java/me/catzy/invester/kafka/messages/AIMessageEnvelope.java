@@ -1,9 +1,15 @@
 package me.catzy.invester.kafka.messages;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AIMessageEnvelope {
-	public String role = null;
-	public String content = null;
+	private String role = null;
+	private String content = null;
 }
