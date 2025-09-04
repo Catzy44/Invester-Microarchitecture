@@ -15,8 +15,8 @@ public class ProcessingResultConsumer {
 	//@KafkaListener(topics = "article-raw", containerFactory = "articleRawFactory")
     //public void onMarketEvent(ConsumerRecord<String, Article> record) {
 	@KafkaListener(topics = "processing-result")
-	public void onMarketEvent(AIProcessingResultEnvelope job) {
+	public void onMarketEvent(AIProcessingResultEnvelope result) {
 		//service.process(job.getMessages());
-		service.handle(job);
+		service.handle(result);
     }
 }

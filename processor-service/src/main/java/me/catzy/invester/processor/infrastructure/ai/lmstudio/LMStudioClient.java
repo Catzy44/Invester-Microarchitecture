@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import me.catzy.invester.processor.application.dto.AIProcessingResult;
+import me.catzy.invester.kafka.messages.AIProcessingResultEnvelope;
 import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AIMessage;
 import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.LMStudioAPIResponse;
 import me.catzy.invester.processor.infrastructure.ai.lmstudio.mapper.LMStudioCompletionMapper;
@@ -65,7 +65,7 @@ public class LMStudioClient {
 		
 	}
 	
-	public AIProcessingResult askAI(List<AIMessage> messages) throws URISyntaxException, IOException, InterruptedException {
+	public AIProcessingResultEnvelope askAI(List<AIMessage> messages) throws URISyntaxException, IOException, InterruptedException {
 		wakeLMStudioIfNeeded();
 		
 		// convert AIMessage DTO into JSON String
