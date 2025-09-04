@@ -34,8 +34,6 @@ public class LMStudioClient {
 	
 	boolean LMStudioWaked = false;
 	private void wakeLMStudioIfNeeded() throws IOException, InterruptedException {
-		if(true) return;
-		
 		if(LMStudioWaked) {
 			return;
 		}
@@ -45,7 +43,7 @@ public class LMStudioClient {
 		Utils.dumpUntilExahausted(p.getErrorStream());
 		p.waitFor();
 		Thread.sleep(1000);
-		
+		/*
 		//to be sure
 		logger.info("unloading old LLM model...");
 		p = new ProcessBuilder("lms","unload","kot").start();
@@ -59,7 +57,7 @@ public class LMStudioClient {
 		Utils.dumpUntilExahausted(p.getInputStream());
 		Utils.dumpUntilExahausted(p.getErrorStream());
 		p.waitFor();
-		Thread.sleep(1000);
+		Thread.sleep(1000);*/
 		
 		logger.info("LSM up and running!");
 		
