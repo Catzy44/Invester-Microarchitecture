@@ -17,6 +17,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.catzy.invester.master.domain.marketEvent.MarketEvent;
 
@@ -26,6 +27,7 @@ import me.catzy.invester.master.domain.marketEvent.MarketEvent;
 @Table(name = "article")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @JsonView({Article.values.class})
+@NoArgsConstructor
 public class Article {
 	public Article(String url, String title, String content, Timestamp timestamp) {
 		this.url = url;

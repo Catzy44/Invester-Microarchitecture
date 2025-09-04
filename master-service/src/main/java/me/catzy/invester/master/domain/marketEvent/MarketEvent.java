@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.catzy.invester.master.domain.article.Article;
 
@@ -22,6 +23,7 @@ import me.catzy.invester.master.domain.article.Article;
 @Getter
 @Setter
 @JsonView({me.catzy.invester.master.domain.marketEvent.MarketEvent.values.class})
+@NoArgsConstructor
 public class MarketEvent {
 	public interface values {}
 	
