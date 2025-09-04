@@ -1,0 +1,28 @@
+name: RUN-PROCESSOR
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: [ self-hosted, Windows, processor ]
+    defaults:
+      run:
+        working-directory: processor-service
+
+    steps:
+      - name: Run killnow
+        shell: cmd
+        run: call killnow.bat
+        continue-on-error: true
+        
+      - uses: actions/checkout@v4
+
+      - name: Copy application.properties
+        run: copy "C:\actions-runner\application.properties" "src\main\resources\"
+        shell: cmd
+      
+      - name: Run bootnow
+        shell: cmd
+        run: call boootnohup.bat
