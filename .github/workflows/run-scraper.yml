@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: [ self-hosted, Windows ]
+    runs-on: [ self-hosted, Windows, scraper ]
     defaults:
       run:
         working-directory: scraper-service
