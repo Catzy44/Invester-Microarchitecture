@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Run killnow
         shell: bash
-        run: ./man.sh stop
+        run: man.sh stop
         continue-on-error: true
         
       - uses: actions/checkout@v4
@@ -25,9 +25,9 @@ jobs:
           lfs: true
 
       - name: Copy application.properties
-        run: copy "/opt/actions-runner/application.properties" "src/main/resources"
+        run: cp "/opt/actions-runner/application.properties" "src/main/resources"
         shell: cmd
       
       - name: Run bootnow
         shell: bash
-        run: ./man.sh start
+        run: man.sh start
