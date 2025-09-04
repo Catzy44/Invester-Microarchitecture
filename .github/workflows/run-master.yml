@@ -25,7 +25,7 @@ jobs:
           lfs: true
 
       - name: Copy application.properties
-        run: copy "/opt/actions-runner/application.properties" "src/main/resources\"
+        run: copy "/opt/actions-runner/application.properties" "src/main/resources"
         shell: cmd
       
       - name: Run bootnow
