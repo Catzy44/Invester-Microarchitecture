@@ -45,7 +45,8 @@ function status_running() {
 ##-Dpaper.playerconnection.keepalive=60
 
 function start_binary() {
-	gradlew bootRun --console plain --args='--spring.config.location=classpath:/application.properties'
+    chmod +x gradlew
+	./gradlew bootRun --console plain --args='--spring.config.location=classpath:/application.properties'
 }
 
 
