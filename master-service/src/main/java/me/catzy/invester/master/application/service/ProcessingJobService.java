@@ -16,5 +16,6 @@ public class ProcessingJobService {
 	public void handleRawArticle(Article a) {
 		AIProcessingJobEnvelope job = factory.createFromArticle(a);
 		producer.produce(job);
+		//TODO: corelate processingJob's with processingResult's
 	}
 }
