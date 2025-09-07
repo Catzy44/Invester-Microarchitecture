@@ -11,6 +11,6 @@ public class ProcessingJobProducer {
 	@Autowired private KafkaTemplate<String, AIProcessingJobEnvelope> templateArticle;
 	
 	public void produce(AIProcessingJobEnvelope result) {
-		templateArticle.send("processing-job", result);
+		templateArticle.send("processing-job", result);//
 	}
 }
