@@ -20,7 +20,10 @@ public class ProcessingJobService {
 	
 	public void handleRawArticle(Article a) {
 		a = articleRepo.save(a);
-		
+		processArticle(a);
+	}
+	
+	public void processArticle(Article a) {
 		ArticleProcessingJob persistentJob = new ArticleProcessingJob();
 		persistentJob.setArticle(a);
 		persistentJob = jobPersistentRepo.save(persistentJob);

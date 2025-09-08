@@ -2,6 +2,8 @@ package me.catzy.invester.master.application.service;
 
 import java.util.stream.Stream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +21,14 @@ public class ProcessingResultService {
 	@Autowired MarketEventFactory factory;
 	@Autowired MarketEventRepository repo;
 	@Autowired ArticleProcessingJobRepository jobPersistentRepo;
+	@Autowired ProcessingJobService serviceJob;
+	
+	private Logger logger = LoggerFactory.getLogger(ProcessingResultService.class);
 	
 	public void handle(AIProcessingResultEnvelope message) {
+		
+		ArticleProcessingJob persistentJob = jobPersistentRepo.findById(message.getPersistentJobId()).get();
 		try {
-			ArticleProcessingJob persistentJob = jobPersistentRepo.findById(message.getPersistentJobId()).get();
-			
 			MarketEvent[] marketEvents = factory.parse(message);//
 			for(MarketEvent e : marketEvents) {
 				e.setArticle(persistentJob.getArticle());
@@ -32,7 +37,10 @@ public class ProcessingResultService {
 			Stream.of(marketEvents).forEach(entity -> repo.save(entity));
 			
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.error("AIProcessingResult JSON parsing FAILED!");
+			logger.error("Retrying!");
+			serviceJob.processArticle(persistentJob.getArticle());
+			//e.printStackTrace();
 		}
 	}
 }
