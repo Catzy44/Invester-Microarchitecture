@@ -28,6 +28,6 @@ public class ProcessingJobService {
 		AIProcessingJobEnvelope job = factory.createFromArticle(a);
 		job.setPersistentJobId(persistentJob.getId());
 		
-		producer.produce(job);
+		producer.produce(job);//
 	}
 }
