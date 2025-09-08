@@ -24,7 +24,7 @@ public class ProcessingResultService {
 		try {
 			ArticleProcessingJob persistentJob = jobPersistentRepo.findById(message.getPersistentJobId()).get();
 			
-			MarketEvent[] marketEvents = factory.parse(message);
+			MarketEvent[] marketEvents = factory.parse(message);//
 			for(MarketEvent e : marketEvents) {
 				e.setArticle(persistentJob.getArticle());
 			}
