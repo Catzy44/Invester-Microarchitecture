@@ -47,6 +47,9 @@ public class Article {
 	
 	public String url;
 	public String title;
+	
+	public static interface content {}
+	@JsonView({content.class})
 	public String content;
 	
 	@OrderBy("sort ASC")
