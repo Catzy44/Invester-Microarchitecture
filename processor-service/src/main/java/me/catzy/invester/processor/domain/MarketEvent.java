@@ -1,4 +1,4 @@
-package me.catzy.invester.processor.domain.marketEvent;
+package me.catzy.invester.processor.domain;
 
 import java.sql.Timestamp;
 
@@ -14,13 +14,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import me.catzy.invester.processor.domain.article.Article;
 
 @Entity
 @Table(name = "market_events")
 @Getter
 @Setter
-@JsonView({me.catzy.invester.processor.domain.marketEvent.MarketEvent.values.class})
+@JsonView({me.catzy.invester.processor.domain.MarketEvent.values.class})
 public class MarketEvent {
 	public interface values {}
 	

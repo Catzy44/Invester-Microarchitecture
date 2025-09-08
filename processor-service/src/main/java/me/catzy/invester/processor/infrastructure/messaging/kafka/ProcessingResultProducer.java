@@ -5,12 +5,13 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import me.catzy.invester.kafka.messages.AIProcessingResultEnvelope;
+import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.LMStudioAPIResponseParsed;
 
 @Component
 public class ProcessingResultProducer {
 	@Autowired private KafkaTemplate<String, AIProcessingResultEnvelope> templateArticle;
 	
-	public void produce(AIProcessingResultEnvelope result) {
-		templateArticle.send("processing-result", result);
+	public void produce(LMStudioAPIResponseParsed result, Long persistentId) {
+		templateArticle.send("processing-result", new AIProcessingResultEnvelope(persistentId, result.getThinking(), result.getReply()));
 	}
 }

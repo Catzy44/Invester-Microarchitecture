@@ -13,5 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AIProcessingJobEnvelope {
+	private Long persistentJobId;
 	private List<AIMessageEnvelope> messages = new ArrayList<AIMessageEnvelope>();
 }

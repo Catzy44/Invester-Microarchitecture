@@ -6,15 +6,24 @@ import org.springframework.stereotype.Service;
 import me.catzy.invester.kafka.messages.AIProcessingJobEnvelope;
 import me.catzy.invester.master.application.factory.ProcessingJobFactory;
 import me.catzy.invester.master.domain.article.Article;
+import me.catzy.invester.master.domain.article.ArticleProcessingJob;
 import me.catzy.invester.master.infrastructure.messaging.kafka.ProcessingJobProducer;
+import me.catzy.invester.master.repository.ArticleProcessingJobRepository;
 
 @Service
 public class ProcessingJobService {
 	@Autowired ProcessingJobFactory factory;
 	@Autowired ProcessingJobProducer producer;
+	@Autowired ArticleProcessingJobRepository jobPersistentRepo;
 	
 	public void handleRawArticle(Article a) {
+		ArticleProcessingJob persistentJob = new ArticleProcessingJob();
+		persistentJob.setArticle(a);
+		persistentJob = jobPersistentRepo.save(persistentJob);
+		
 		AIProcessingJobEnvelope job = factory.createFromArticle(a);
+		job.setPersistentJobId(persistentJob.getId());
+		
 		producer.produce(job);
 		//TODO: corelate processingJob's with processingResult's
 	}

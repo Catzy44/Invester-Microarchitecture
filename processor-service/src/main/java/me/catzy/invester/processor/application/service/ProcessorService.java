@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import me.catzy.invester.kafka.messages.AIProcessingResultEnvelope;
 import me.catzy.invester.processor.infrastructure.ai.lmstudio.LMStudioClient;
 import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AIMessage;
+import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.LMStudioAPIResponseParsed;
 import me.catzy.invester.processor.infrastructure.messaging.kafka.ProcessingResultProducer;
 
 @Service
@@ -19,13 +19,14 @@ public class ProcessorService {
 	@Autowired private LMStudioClient serviceLM;
 	@Autowired private ProcessingResultProducer resultProducer;
 	
-	public void process(List<AIMessage> messages) {
+	public void process(List<AIMessage> messages, Long jobPersistenceId) {
 		logger.debug("AI processing started");
 		
 		for (int i = 0; i < AI_PROCESSING_RETRIES; i++) {
 			try {
-				AIProcessingResultEnvelope response = serviceLM.askAI(messages);
-				resultProducer.produce(response);
+				LMStudioAPIResponseParsed response = serviceLM.askAI(messages);
+				
+				resultProducer.produce(response, jobPersistenceId);
 				
 				logger.debug("AI processing finished");
 				return;

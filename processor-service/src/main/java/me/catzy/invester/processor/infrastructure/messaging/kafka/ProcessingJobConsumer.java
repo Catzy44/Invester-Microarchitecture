@@ -15,13 +15,10 @@ import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AIMessage;
 public class ProcessingJobConsumer {
 @Autowired ProcessorService service;
 	
-	//@KafkaListener(topics = "article-raw", containerFactory = "articleRawFactory")
-    //public void onMarketEvent(ConsumerRecord<String, Article> record) {
 	@KafkaListener(topics = "processing-job")
 	public void onMarketEvent(AIProcessingJobEnvelope job) {
 		List<AIMessageEnvelope> messages = job.getMessages();
 		
-		
-		service.process(messages.stream().map(env -> new AIMessage(env.getRole(), env.getContent(), null)).toList());
+		service.process(messages.stream().map(env -> new AIMessage(env.getRole(), env.getContent(), null)).toList(), job.getPersistentJobId());
     }
 }

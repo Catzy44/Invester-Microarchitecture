@@ -1,4 +1,4 @@
-package me.catzy.invester.kafka.messages;
+package me.catzy.invester.processor.infrastructure.ai.lmstudio.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AIProcessingResultEnvelope {
-	private Long persistentJobId;
-	private String thinking;
-	private String message;
+public class LMStudioAPIResponseParsed {
+	String thinking;
+	String reply;
 }

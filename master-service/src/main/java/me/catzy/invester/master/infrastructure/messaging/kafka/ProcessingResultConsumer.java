@@ -9,7 +9,6 @@ import me.catzy.invester.master.application.service.ProcessingResultService;
 
 @Component
 public class ProcessingResultConsumer {
-	
 	@Autowired private ProcessingResultService service;
 	
 	//@KafkaListener(topics = "article-raw", containerFactory = "articleRawFactory")

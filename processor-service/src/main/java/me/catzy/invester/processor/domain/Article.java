@@ -1,4 +1,4 @@
-package me.catzy.invester.processor.domain.article;
+package me.catzy.invester.processor.domain;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -18,7 +18,6 @@ import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import me.catzy.invester.processor.domain.marketEvent.MarketEvent;
 
 @Getter
 @Setter
