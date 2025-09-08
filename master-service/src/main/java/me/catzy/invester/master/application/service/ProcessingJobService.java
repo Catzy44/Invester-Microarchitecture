@@ -9,14 +9,18 @@ import me.catzy.invester.master.domain.article.Article;
 import me.catzy.invester.master.domain.article.ArticleProcessingJob;
 import me.catzy.invester.master.infrastructure.messaging.kafka.ProcessingJobProducer;
 import me.catzy.invester.master.repository.ArticleProcessingJobRepository;
+import me.catzy.invester.master.repository.ArticleRepository;
 
 @Service
 public class ProcessingJobService {
 	@Autowired ProcessingJobFactory factory;
 	@Autowired ProcessingJobProducer producer;
 	@Autowired ArticleProcessingJobRepository jobPersistentRepo;
+	@Autowired ArticleRepository articleRepo;
 	
 	public void handleRawArticle(Article a) {
+		a = articleRepo.save(a);
+		
 		ArticleProcessingJob persistentJob = new ArticleProcessingJob();
 		persistentJob.setArticle(a);
 		persistentJob = jobPersistentRepo.save(persistentJob);
@@ -25,6 +29,5 @@ public class ProcessingJobService {
 		job.setPersistentJobId(persistentJob.getId());
 		
 		producer.produce(job);
-		//TODO: corelate processingJob's with processingResult's
 	}
 }
