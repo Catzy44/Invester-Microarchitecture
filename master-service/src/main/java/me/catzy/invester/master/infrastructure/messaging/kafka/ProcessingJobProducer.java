@@ -8,9 +8,9 @@ import me.catzy.invester.kafka.messages.AIProcessingJobEnvelope;
 
 @Component
 public class ProcessingJobProducer {
-	@Autowired private KafkaTemplate<Long, AIProcessingJobEnvelope> templateArticle;
+	@Autowired private KafkaTemplate<String, AIProcessingJobEnvelope> templateArticle;
 	
 	public void produce(AIProcessingJobEnvelope result) {
-		templateArticle.send("processing-job",result.getPersistentJobId(), result);//
+		templateArticle.send("processing-job",result.getPersistentJobId()+"", result);//
 	}
 }
