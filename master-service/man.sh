@@ -81,7 +81,8 @@ then
 		exit 0
         fi
 
-	wait_till_die
+	# wait_till_die
+	kill $(cat proc.pid)
 
 	if session_exists
 	then
