@@ -11,8 +11,6 @@ import me.catzy.invester.master.application.service.ProcessingResultService;
 public class ProcessingResultConsumer {
 	@Autowired private ProcessingResultService service;
 	
-	//@KafkaListener(topics = "article-raw", containerFactory = "articleRawFactory")
-    //public void onMarketEvent(ConsumerRecord<String, Article> record) {
 	@KafkaListener(topics = "processing-result")
 	public void onNewResult(AIProcessingResultEnvelope result) {
 		service.handle(result);

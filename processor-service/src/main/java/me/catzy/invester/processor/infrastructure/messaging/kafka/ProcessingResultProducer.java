@@ -9,9 +9,9 @@ import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.LMStudioAPIRes
 
 @Component
 public class ProcessingResultProducer {
-	@Autowired private KafkaTemplate<String, AIProcessingResultEnvelope> templateArticle;
+	@Autowired private KafkaTemplate<Long, AIProcessingResultEnvelope> templateArticle;
 	
 	public void produce(LMStudioAPIResponseParsed result, Long persistentId) {
-		templateArticle.send("processing-result", new AIProcessingResultEnvelope(persistentId, result.getThinking(), result.getReply()));
+		templateArticle.send("processing-result",persistentId, new AIProcessingResultEnvelope(persistentId, result.getThinking(), result.getReply()));
 	}
 }
