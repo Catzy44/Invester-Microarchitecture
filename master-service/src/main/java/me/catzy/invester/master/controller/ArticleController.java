@@ -3,13 +3,19 @@ package me.catzy.invester.master.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import lombok.Data;
 import me.catzy.invester.master.application.service.ArticleService;
 import me.catzy.invester.master.domain.article.Article;
 import me.catzy.invester.master.domain.marketEvent.MarketEvent;
@@ -31,5 +37,18 @@ public class ArticleController extends GenericController<Article, Long> {
 	@GetMapping("/{id}/marketEvents")
 	public List<MarketEvent> getEvents(@PathVariable long id) {
 		return repo.findById(id).get().getEvents();//
+	}
+
+	@Data
+	static class ArticleChunkQ {
+		private int index;
+		private int count;
+	}
+	private static interface getChunk extends Article.values, Article.vMarketEvents, MarketEvent.values {}
+	@JsonView(getChunk.class)
+	@PostMapping({ "/chunk" })
+	public List<Article> getArticlesChunk(@RequestBody ArticleChunkQ data) {
+		Pageable pageable = PageRequest.of(data.getIndex(), 25 * data.getCount(), Sort.by("id").descending());
+		return repo.getArticlesChunk(pageable);
 	}
 }
