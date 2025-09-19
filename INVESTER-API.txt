@@ -1,0 +1,46 @@
+ADRES API: 
+ https://api.invester.endimc.pl/api/
+
+UWIERZYTELNIANIE HEADEREM BEARER:
+ authorization: Bearer WODOSPAD
+(durnie zabezpieczone dla uproszczenia)
+
+API jest REST, każdy ENDPOINT jest CRUD i zwraca obiekt lub listę obiektów w JSON
+
+LISTA ENDPOINTÓW:
+ articles - wszystkie artykuły
+ articles/{id} - konkretny artykuł z id
+ articles/{id}/marketEvents - lista MarketEventów konkretnego artykułu (może być pustą tablicą lub NULL)
+ marketEvents - lista wszystkich marketEventów w systemie
+ marketEvents/{id} - konkretny marketEvents
+ marketEvents/current - lista wsystkich marketEventów aktualnie wpływających na rynek (endTimestamp < teraz)
+
+WAŻNE:
+ w momencie kiedy artykuł zostaje przetworzony lista jego marketEventów zmienia się z NULL na tą listę właśnie
+ 
+LISTA TYPÓW:
+
+export type Article = {
+    id: number,
+    url: string,
+    title: string,
+    content: string,
+    timestamp: Date,
+    processedTimestamp?: Date
+}
+export type MarketEvent = {
+    id: number;
+    type: MarketEventType; // 0 - negatywny wpływ, 1 - pozytywny
+    impactPrc: number; // 0–100
+    impactChance: number; // 0–100
+    startTimestamp: Date; // albo string jeśli nie parsujesz od razu
+    endTimestamp: Date;
+    scream: string;
+    article?: Article;
+}
+export enum MarketEventType {
+    Negatywny = 0,
+    Pozytywny = 1,
+}
+
+P.W.

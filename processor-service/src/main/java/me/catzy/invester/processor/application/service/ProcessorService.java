@@ -20,7 +20,7 @@ public class ProcessorService {
 	@Autowired private ProcessingResultProducer resultProducer;
 	
 	public void process(List<AIMessage> messages, Long jobPersistenceId) {
-		logger.debug("AI processing started");
+		logger.info("AI processing started");
 		
 		for (int i = 0; i < AI_PROCESSING_RETRIES; i++) {
 			try {
@@ -28,7 +28,7 @@ public class ProcessorService {
 				
 				resultProducer.produce(response, jobPersistenceId);
 				
-				logger.debug("AI processing finished");
+				logger.info("AI processing finished");
 				return;
 			} catch (Exception e) {
 				logger.error("AI processing FAILED, attemp "+ (i+1) +" out of " +AI_PROCESSING_RETRIES);

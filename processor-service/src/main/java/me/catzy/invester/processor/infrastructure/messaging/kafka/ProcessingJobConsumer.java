@@ -2,6 +2,8 @@ package me.catzy.invester.processor.infrastructure.messaging.kafka;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -13,7 +15,8 @@ import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AIMessage;
 
 @Component
 public class ProcessingJobConsumer {
-@Autowired ProcessorService service;
+	private static final Logger logger = LoggerFactory.getLogger(ProcessingJobConsumer.class);
+	@Autowired ProcessorService service;
 	
 	@KafkaListener(topics = "processing-job")
 	public void onMarketEvent(AIProcessingJobEnvelope job) {

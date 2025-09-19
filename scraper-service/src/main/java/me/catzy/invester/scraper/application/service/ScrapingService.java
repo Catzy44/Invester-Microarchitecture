@@ -39,7 +39,7 @@ public class ScrapingService {
 	@Autowired private SourcesConfig sourcesConfig;
 	
 	
-	//initial delat zmienić na 1 z powrotem
+	//initial delay zmienić na 1 z powrotem
 	@Scheduled(fixedRate = 10, initialDelay = 0, timeUnit = TimeUnit.MINUTES)
 	public void checkForAnyNews() throws MalformedURLException, Exception {
 		logger.info("checking for news...");
@@ -48,7 +48,7 @@ public class ScrapingService {
 			try {
 				processRSS(new URI(s).toURL());
 			} catch (Exception e) {
-				logger.error("failed processing one of privided RSS's");
+				logger.error("failed processing one of provided RSS's");
 				e.printStackTrace();
 			}
 		}
@@ -61,11 +61,10 @@ public class ScrapingService {
         List<RawArticleEnvelope> articles = new ArrayList<RawArticleEnvelope>();
 
         for (int i = 0; i < items.getLength(); i++) {
-        	if(!(items.item(i) instanceof Element)) {
+        	if(!(items.item(i) instanceof Element item)) {
         		continue;
         	}
-            Element item = (Element) items.item(i);
-	        articles.add(articleFactory.fromRssElement(item));
+            articles.add(articleFactory.fromRssElement(item));
         }
         
         for(RawArticleEnvelope article : articles) {
@@ -76,10 +75,10 @@ public class ScrapingService {
         	
         	article.setContent(scrapeArticleContent(article));
         	
-        	if(article.getContent() == null || article.getContent().length() == 0) {
-        		logger.error("Failed to scrape article: " + article.getUrl());
+        	if(article.getContent() == null || article.getContent().isEmpty()) {
+                logger.error("Failed to scrape article: {}", article.getUrl());
         		continue;
-        	}//
+        	}
         	
         	articleProd.produce(article);
         }
@@ -95,20 +94,20 @@ public class ScrapingService {
 			List<WebElement> el = driver.findElements(By.id("article"));
 
 			// 2
-			if (el.size() == 0) {
+			if (el.isEmpty()) {
 				logger.warn("article web-element not found - trying alternative method, URL:" + a.getUrl());
 				el = driver.findElements(By.className("articlePage"));
 			}
 
 			// 3
-			if (el.size() == 0) {
-				logger.warn("article web-element not found AGAIN - trying alternative method (FX), URL:" + a.getUrl());
+			if (el.isEmpty()) {
+                logger.warn("article web-element not found AGAIN - trying alternative method (FX), URL:{}", a.getUrl());
 				el = driver.findElements(By.className("fxs_article_content"));
 			}
 			
 			return Utils.extractArticleText(el.get(0));
     	} catch (Exception e) {
-    		logger.error("failed scraping article: " + a.getUrl());
+            logger.error("failed scraping article: {}", a.getUrl());
     		e.printStackTrace();
     	}
 		return null;
