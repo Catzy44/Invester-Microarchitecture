@@ -1,6 +1,3 @@
-ADRES API: 
- https://api.invester.endimc.pl/api/
-
 UWIERZYTELNIANIE HEADEREM BEARER:
  authorization: Bearer WODOSPAD
 (durnie zabezpieczone dla uproszczenia)
