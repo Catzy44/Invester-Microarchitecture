@@ -19,7 +19,7 @@ import lombok.Setter;
 import me.catzy.invester.master.domain.article.Article;
 
 @Entity
-@Table(name = "market_events")
+@Table(name = "master_market_events")
 @Getter
 @Setter
 @JsonView({me.catzy.invester.master.domain.marketEvent.MarketEvent.values.class})

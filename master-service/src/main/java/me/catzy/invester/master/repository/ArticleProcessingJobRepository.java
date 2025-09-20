@@ -5,7 +5,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import me.catzy.invester.master.domain.article.ArticleProcessingJob;
 
-@RepositoryRestResource(collectionResourceRel = "article_processing_job", path = "article_processing_job")
+@RepositoryRestResource(collectionResourceRel = "master_article_processing_job", path = "master_article_processing_job")
 public interface ArticleProcessingJobRepository extends JpaRepository<ArticleProcessingJob, Long>{
 
 }

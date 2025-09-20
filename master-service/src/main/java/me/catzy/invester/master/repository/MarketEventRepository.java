@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.catzy.invester.master.domain.marketEvent.MarketEvent;
 
-@RepositoryRestResource(collectionResourceRel = "market_events", path = "market_events")
+@RepositoryRestResource(collectionResourceRel = "master_market_events", path = "master_market_events")
 public interface MarketEventRepository extends JpaRepository<MarketEvent, Long> {
 	
 	@AllArgsConstructor

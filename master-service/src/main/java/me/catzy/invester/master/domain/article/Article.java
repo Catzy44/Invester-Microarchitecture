@@ -24,7 +24,7 @@ import me.catzy.invester.master.domain.marketEvent.MarketEvent;
 @Getter
 @Setter
 @Entity
-@Table(name = "article")
+@Table(name = "master_article")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @JsonView({Article.values.class})
 @NoArgsConstructor

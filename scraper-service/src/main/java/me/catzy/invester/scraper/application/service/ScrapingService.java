@@ -20,12 +20,15 @@ import org.w3c.dom.NodeList;
 
 import com.github.benmanes.caffeine.cache.Cache;
 
+import jakarta.annotation.PostConstruct;
 import me.catzy.invester.kafka.messages.RawArticleEnvelope;
 import me.catzy.invester.scraper.application.factory.RawArticleFactory;
 import me.catzy.invester.scraper.config.SourcesConfig;
+import me.catzy.invester.scraper.domain.rawarticle.VisitedUrlEntity;
 import me.catzy.invester.scraper.infrastructure.messaging.kafka.RawArticlePublisher;
 import me.catzy.invester.scraper.infrastructure.scraping.parser.ArticleParser;
 import me.catzy.invester.scraper.infrastructure.scraping.selenium.WebDriverService;
+import me.catzy.invester.scraper.repository.VisitedUrlRepository;
 import me.catzy.invester.scraper.util.Utils;
 
 @Service
@@ -37,10 +40,22 @@ public class ScrapingService {
 	@Autowired private RawArticleFactory articleFactory;
 	@Autowired private Cache<String, Boolean> urlCache;
 	@Autowired private SourcesConfig sourcesConfig;
+	@Autowired private VisitedUrlRepository repo;
+	
+	@PostConstruct
+	public void init() {
+		List<VisitedUrlEntity> processedArticles = repo.findAll();
+		processedArticles.stream().forEach(a -> urlCache.put(a.getUrl(), true));
+	}
+	
+	public void addToCache(String url) {
+		urlCache.put(url, true);
+		repo.save(new VisitedUrlEntity(url));
+	}
 	
 	
 	//initial delay zmienić na 1 z powrotem
-	@Scheduled(fixedRate = 10, initialDelay = 0, timeUnit = TimeUnit.MINUTES)
+	@Scheduled(fixedRate = 5, initialDelay = 1, timeUnit = TimeUnit.MINUTES)
 	public void checkForAnyNews() throws MalformedURLException, Exception {
 		logger.info("checking for news...");
 
@@ -71,7 +86,8 @@ public class ScrapingService {
         	if(urlCache.getIfPresent(article.getUrl()) != null) {
         		continue;
         	}
-        	urlCache.put(article.getUrl(), true);
+        	addToCache(article.getUrl());
+        	logger.info("New article: {}", article.getUrl());
         	
         	article.setContent(scrapeArticleContent(article));
         	
@@ -95,14 +111,19 @@ public class ScrapingService {
 
 			// 2
 			if (el.isEmpty()) {
-				logger.warn("article web-element not found - trying alternative method, URL:" + a.getUrl());
+				//logger.warn("article web-element not found - trying alternative method, URL:" + a.getUrl());
 				el = driver.findElements(By.className("articlePage"));
 			}
 
 			// 3
 			if (el.isEmpty()) {
-                logger.warn("article web-element not found AGAIN - trying alternative method (FX), URL:{}", a.getUrl());
+                //logger.warn("article web-element not found AGAIN - trying alternative method (FX), URL:{}", a.getUrl());
 				el = driver.findElements(By.className("fxs_article_content"));
+			}
+			
+			if (el.isEmpty()) {
+                logger.warn("article web-element not found AGAIN - trying alternative method (FX), URL:{}", a.getUrl());
+                throw new Exception("Failed to scrape article!");
 			}
 			
 			return Utils.extractArticleText(el.get(0));
