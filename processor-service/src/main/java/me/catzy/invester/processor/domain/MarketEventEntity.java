@@ -19,8 +19,8 @@ import lombok.Setter;
 @Table(name = "market_events")
 @Getter
 @Setter
-@JsonView({me.catzy.invester.processor.domain.MarketEvent.values.class})
-public class MarketEvent {
+@JsonView({me.catzy.invester.processor.domain.MarketEventEntity.values.class})
+public class MarketEventEntity {
 	public interface values {}
 	
     @Id
@@ -39,7 +39,7 @@ public class MarketEvent {
     @JsonView({vArticle.class})
     @ManyToOne
     @JoinColumn(name = "article_id")
-    private Article article;
+    private ArticleEntity article;
     
     @Override
     public String toString() {

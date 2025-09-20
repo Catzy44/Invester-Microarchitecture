@@ -11,10 +11,10 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import me.catzy.invester.master.domain.marketEvent.MarketEvent;
+import me.catzy.invester.master.domain.MarketEventEntity;
 
 @RepositoryRestResource(collectionResourceRel = "master_market_events", path = "master_market_events")
-public interface MarketEventRepository extends JpaRepository<MarketEvent, Long> {
+public interface MarketEventRepository extends JpaRepository<MarketEventEntity, Long> {
 	
 	@AllArgsConstructor
 	@Getter
@@ -31,6 +31,6 @@ public interface MarketEventRepository extends JpaRepository<MarketEvent, Long> 
 	public EstimationDTO getDailyEstimation(@Param("day") Timestamp day);
 	
 	@Query("SELECT m FROM MarketEvent m WHERE m.endTimestamp > CURRENT_TIMESTAMP")
-	public List<MarketEvent> getCurrentEvents();
+	public List<MarketEventEntity> getCurrentEvents();
 	
 }

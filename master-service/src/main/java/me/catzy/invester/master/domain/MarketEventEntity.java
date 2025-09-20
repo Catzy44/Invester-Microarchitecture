@@ -1,4 +1,4 @@
-package me.catzy.invester.master.domain.marketEvent;
+package me.catzy.invester.master.domain;
 
 import java.sql.Timestamp;
 
@@ -16,15 +16,14 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.catzy.invester.master.domain.article.Article;
 
 @Entity
 @Table(name = "master_market_events")
 @Getter
 @Setter
-@JsonView({me.catzy.invester.master.domain.marketEvent.MarketEvent.values.class})
+@JsonView({me.catzy.invester.master.domain.MarketEventEntity.values.class})
 @NoArgsConstructor
-public class MarketEvent {
+public class MarketEventEntity {
 	public interface values {}
 	
     @Id
@@ -43,7 +42,7 @@ public class MarketEvent {
     @JsonView({vArticle.class})
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "article_id")
-    private Article article;
+    private ArticleEntity article;
     
     @Override
     public String toString() {

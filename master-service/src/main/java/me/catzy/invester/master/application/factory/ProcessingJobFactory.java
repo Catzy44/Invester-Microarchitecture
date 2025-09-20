@@ -4,12 +4,12 @@ import org.springframework.stereotype.Component;
 
 import me.catzy.invester.kafka.messages.AIMessageEnvelope;
 import me.catzy.invester.kafka.messages.AIProcessingJobEnvelope;
-import me.catzy.invester.master.domain.article.Article;
+import me.catzy.invester.master.domain.ArticleEntity;
 
 @Component
 public class ProcessingJobFactory {
 	
-	public AIProcessingJobEnvelope createFromArticle(Article a) {
+	public AIProcessingJobEnvelope createFromArticle(ArticleEntity a) {
 		AIProcessingJobEnvelope job = new AIProcessingJobEnvelope();
 		
 		AIMessageEnvelope system = new AIMessageEnvelope();
@@ -40,7 +40,7 @@ EXAMPLE OF OUTPUT FORMATTING:
       "impactChance": 7,
       "startTimestamp": "2025-02-25T16:06:00.000Z",
       "endTimestamp": "2025-02-26T00:00:00.000Z",
-      "scream": "Weaker US Treasuries"
+      "scream": "Spadek prognoz"
     },
     {
       "type": 0,
@@ -48,7 +48,7 @@ EXAMPLE OF OUTPUT FORMATTING:
       "impactChance": 17,
       "startTimestamp": "2025-02-25T16:06:00.000Z",
       "endTimestamp": "2025-03-02T00:00:00.000Z",
-      "scream": "Tariff Threats Sour Mood"
+      "scream": "Spowolnienie Gospodarcze"
     }
 ]
 

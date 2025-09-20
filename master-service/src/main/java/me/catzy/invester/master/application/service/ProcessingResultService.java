@@ -11,8 +11,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import me.catzy.invester.kafka.messages.AIProcessingResultEnvelope;
 import me.catzy.invester.master.application.factory.MarketEventFactory;
-import me.catzy.invester.master.domain.article.ArticleProcessingJob;
-import me.catzy.invester.master.domain.marketEvent.MarketEvent;
+import me.catzy.invester.master.domain.ArticleProcessingJobEntity;
+import me.catzy.invester.master.domain.MarketEventEntity;
 import me.catzy.invester.master.repository.ArticleProcessingJobRepository;
 import me.catzy.invester.master.repository.MarketEventRepository;
 
@@ -27,10 +27,10 @@ public class ProcessingResultService {
 	
 	public void handle(AIProcessingResultEnvelope message) {
 		
-		ArticleProcessingJob persistentJob = jobPersistentRepo.findById(message.getPersistentJobId()).get();
+		ArticleProcessingJobEntity persistentJob = jobPersistentRepo.findById(message.getPersistentJobId()).get();
 		try {
-			MarketEvent[] marketEvents = factory.parse(message);//
-			for(MarketEvent e : marketEvents) {
+			MarketEventEntity[] marketEvents = factory.parse(message);//
+			for(MarketEventEntity e : marketEvents) {
 				e.setArticle(persistentJob.getArticle());
 			}
 			

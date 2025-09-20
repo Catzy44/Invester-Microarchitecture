@@ -17,14 +17,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.catzy.invester.master.application.service.MarketEventService;
-import me.catzy.invester.master.domain.marketEvent.MarketEvent;
+import me.catzy.invester.master.domain.MarketEventEntity;
 import me.catzy.invester.master.generic.GenericController;
 import me.catzy.invester.master.repository.MarketEventRepository;
 import me.catzy.invester.master.repository.MarketEventRepository.EstimationDTO;
 
 @RestController
 @RequestMapping({ "/marketEvents"})
-public class MarketEventController extends GenericController<MarketEvent, Long>{
+public class MarketEventController extends GenericController<MarketEventEntity, Long>{
 	public MarketEventController(MarketEventService service) {
 		super(service);
 	}
@@ -43,9 +43,9 @@ public class MarketEventController extends GenericController<MarketEvent, Long>{
 		return repo.getDailyEstimation(body.timestamp);
 	}
 	
-	@JsonView(MarketEvent.values.class)
+	@JsonView(MarketEventEntity.values.class)
 	@GetMapping("/current")
-	public List<MarketEvent> currentEvents() {
+	public List<MarketEventEntity> currentEvents() {
 		return repo.getCurrentEvents();
 	}
 	

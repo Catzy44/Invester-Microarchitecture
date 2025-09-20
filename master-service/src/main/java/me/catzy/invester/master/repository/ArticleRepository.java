@@ -7,13 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import me.catzy.invester.master.domain.article.Article;
+import me.catzy.invester.master.domain.ArticleEntity;
 
 @RepositoryRestResource(collectionResourceRel = "master_article", path = "master_article")
-public interface ArticleRepository extends JpaRepository<Article, Long> {
-	public Article findByUrl(String url);
-	public List<Article> findByEventsIsEmptyAndContentIsNotNullOrderByTimestampDesc();
+public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
+	public ArticleEntity findByUrl(String url);
+	public List<ArticleEntity> findByEventsIsEmptyAndContentIsNotNullOrderByTimestampDesc();
 	
 	 @Query("SELECT a FROM Article a ORDER BY a.id DESC")
-	 public List<Article> getArticlesChunk(Pageable pageable);
+	 public List<ArticleEntity> getArticlesChunk(Pageable pageable);
 }

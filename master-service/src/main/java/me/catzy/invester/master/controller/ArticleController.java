@@ -17,14 +17,14 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Data;
 import me.catzy.invester.master.application.service.ArticleService;
-import me.catzy.invester.master.domain.article.Article;
-import me.catzy.invester.master.domain.marketEvent.MarketEvent;
+import me.catzy.invester.master.domain.ArticleEntity;
+import me.catzy.invester.master.domain.MarketEventEntity;
 import me.catzy.invester.master.generic.GenericController;
 import me.catzy.invester.master.repository.ArticleRepository;
 
 @RestController
 @RequestMapping({ "/articles"})
-public class ArticleController extends GenericController<Article, Long> {
+public class ArticleController extends GenericController<ArticleEntity, Long> {
 	@Autowired ArticleService service;
 	@Autowired ArticleRepository repo;
 	
@@ -32,10 +32,10 @@ public class ArticleController extends GenericController<Article, Long> {
         super(service);
     }
 	
-	private static interface getEvents extends Article.vMarketEvents, MarketEvent.values {}
+	private static interface getEvents extends ArticleEntity.vMarketEvents, MarketEventEntity.values {}
 	@JsonView(getEvents.class)
 	@GetMapping("/{id}/marketEvents")
-	public List<MarketEvent> getEvents(@PathVariable long id) {
+	public List<MarketEventEntity> getEvents(@PathVariable long id) {
 		return repo.findById(id).get().getEvents();//
 	}
 
@@ -44,10 +44,10 @@ public class ArticleController extends GenericController<Article, Long> {
 		private int index;
 		private int count;
 	}
-	private static interface getChunk extends Article.values, Article.vMarketEvents, MarketEvent.values {}
+	private static interface getChunk extends ArticleEntity.values, ArticleEntity.vMarketEvents, MarketEventEntity.values {}
 	@JsonView(getChunk.class)
 	@PostMapping({ "/chunk" })
-	public List<Article> getArticlesChunk(@RequestBody ArticleChunkQ data) {
+	public List<ArticleEntity> getArticlesChunk(@RequestBody ArticleChunkQ data) {
 		Pageable pageable = PageRequest.of(data.getIndex(), 25 * data.getCount(), Sort.by("id").descending());
 		return repo.getArticlesChunk(pageable);
 	}

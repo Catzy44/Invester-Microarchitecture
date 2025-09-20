@@ -1,4 +1,4 @@
-package me.catzy.invester.master.domain.article;
+package me.catzy.invester.master.domain;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -19,17 +19,16 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.catzy.invester.master.domain.marketEvent.MarketEvent;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "master_article")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-@JsonView({Article.values.class})
+@JsonView({ArticleEntity.values.class})
 @NoArgsConstructor
-public class Article {
-	public Article(String url, String title, String content, Timestamp timestamp) {
+public class ArticleEntity {
+	public ArticleEntity(String url, String title, String content, Timestamp timestamp) {
 		this.url = url;
 		this.title = title;
 		this.content = content;
@@ -62,5 +61,5 @@ public class Article {
 	public interface vMarketEvents {}
 	@JsonView(vMarketEvents.class)
 	@OneToMany(mappedBy="article")
-	public List<MarketEvent> events;
+	public List<MarketEventEntity> events;
 }

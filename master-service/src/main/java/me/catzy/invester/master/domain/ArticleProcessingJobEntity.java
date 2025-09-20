@@ -1,4 +1,4 @@
-package me.catzy.invester.master.domain.article;
+package me.catzy.invester.master.domain;
 
 import jakarta.persistence.Access;
 import jakarta.persistence.AccessType;
@@ -18,7 +18,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "master_article_processing_job")
 @NoArgsConstructor
-public class ArticleProcessingJob {
+public class ArticleProcessingJobEntity {
 	@Id
 	@Access(AccessType.PROPERTY)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,5 +26,5 @@ public class ArticleProcessingJob {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_article")
-	private Article article;
+	private ArticleEntity article;
 }

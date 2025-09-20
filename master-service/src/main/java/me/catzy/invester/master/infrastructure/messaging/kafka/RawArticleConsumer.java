@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import me.catzy.invester.kafka.messages.RawArticleEnvelope;
 import me.catzy.invester.master.application.service.ProcessingJobService;
-import me.catzy.invester.master.domain.article.Article;
+import me.catzy.invester.master.domain.ArticleEntity;
 
 @Component
 public class RawArticleConsumer {
@@ -16,6 +16,6 @@ public class RawArticleConsumer {
     //public void onMarketEvent(ConsumerRecord<String, Article> record) {
 	@KafkaListener(topics = "article-raw")
 	public void onMarketEvent(RawArticleEnvelope a) {
-		service.handleRawArticle(new Article(a.getUrl(),a.getTitle(),a.getContent(),a.getTimestamp()));
+		service.handleRawArticle(new ArticleEntity(a.getUrl(),a.getTitle(),a.getContent(),a.getTimestamp()));
     }
 }

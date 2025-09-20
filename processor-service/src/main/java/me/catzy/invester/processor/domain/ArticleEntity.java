@@ -24,8 +24,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "article")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-@JsonView({Article.values.class})
-public class Article {
+@JsonView({ArticleEntity.values.class})
+public class ArticleEntity {
 	public interface values  extends id{}
 	
 	public static interface id {}
@@ -49,5 +49,5 @@ public class Article {
 	public interface vMarketEvents {}
 	@JsonView(vMarketEvents.class)
 	@OneToMany(mappedBy="article")
-	public List<MarketEvent> events;
+	public List<MarketEventEntity> events;
 }
