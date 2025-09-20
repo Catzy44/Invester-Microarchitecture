@@ -48,13 +48,13 @@ public class ScrapingService {
 		processedArticles.stream().forEach(a -> urlCache.put(a.getUrl(), true));
 	}
 	
+	//TODO implement better cache&database synchronization for multi-instance scenarios
 	public void addToCache(String url) {
 		urlCache.put(url, true);
 		repo.save(new VisitedUrlEntity(url));
 	}
 	
 	
-	//initial delay zmienić na 1 z powrotem
 	@Scheduled(fixedRate = 5, initialDelay = 1, timeUnit = TimeUnit.MINUTES)
 	public void checkForAnyNews() throws MalformedURLException, Exception {
 		logger.info("checking for news...");
