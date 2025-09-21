@@ -19,6 +19,11 @@ runs:
   using: composite
   steps:
     - uses: actions/checkout@v4
+      with: 
+        ref: ${{ github.sha }} 
+        fetch-depth: 0 
+        clean: true 
+        lfs: true
 
     # copy config; if path changes in the future, tweak matrix not here
     - shell: ${{ runner.os == 'Windows' && 'cmd' || 'bash' }}
