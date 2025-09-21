@@ -5,6 +5,11 @@ on:
 
   workflow_dispatch:
     inputs:
+      service:
+        description: 'master | processor | scraper | all'
+        default: all
+        options: [ all, master, processor, scraper ]
+        type: choice
       action:
         description: "kill | start | both"
         required: true
@@ -14,9 +19,12 @@ on:
           - kill
           - start
           - both
-
+          
 jobs:
   svc:
+    if: github.event_name == 'pull_request' || # PR -> zawsze leci (wszystkie wiersze)
+        github.event.inputs.service == 'all' || # ręcznie + all -> j.w.
+        github.event.inputs.service == matrix.service # ręcznie + konkretny serwis -> filtrowanie
     strategy:
       matrix:
         include:
@@ -53,6 +61,7 @@ jobs:
     steps:
       - name: kill step
         if: env.ACTION == 'kill' || env.ACTION == 'both'
+
         uses: ./.github/actions/service-kill
         with:
           dir:  ${{ matrix.dir }}
