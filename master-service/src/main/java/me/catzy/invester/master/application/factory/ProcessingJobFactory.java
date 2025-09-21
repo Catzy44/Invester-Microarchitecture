@@ -31,6 +31,8 @@ startTimestamp: A SQL TIMESTAMP representing the start of the influence in the f
 endTimestamp: A SQL TIMESTAMP representing the end of the influence, formatted similarly.
 scream: a short expressive phrase (max 32 characters) in POLISH capturing a spontaneous reaction or mood
 
+Do not ommit any fields in your response. Even when the value is zero.
+
 interpretationConfidence is NOT the same as impactChance. 
 - interpretationConfidence = certainty of interpretation (does this article really matter for EURUSD?). 
 - impactChance = chance that the article will cause actual price movement.
