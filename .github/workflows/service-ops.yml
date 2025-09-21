@@ -22,12 +22,6 @@ on:
           
 jobs:
   svc:
-    # PR -> zawsze leci (wszystkie wiersze)
-    # ręcznie + all -> j.w.
-    # ręcznie + konkretny serwis -> filtrowanie
-    if: github.event_name == 'pull_request' || 
-        github.event.inputs.service == 'all' || 
-        github.event.inputs.service == matrix.service 
     strategy:
       matrix:
         include:
@@ -62,18 +56,29 @@ jobs:
       ACTION: ${{ github.event_name == 'pull_request' && 'both' || github.event.inputs.action }}
 
     steps:
-      - name: kill step
-        if: env.ACTION == 'kill' || env.ACTION == 'both'
+      - name: kill
+        if: (env.ACTION == 'kill' || env.ACTION == 'both') &&
+            (github.event_name == 'pull_request' ||
+             github.event.inputs.service == 'all' ||
+             github.event.inputs.service == matrix.service)
 
         uses: ./.github/actions/service-kill
         with:
           dir:  ${{ matrix.dir }}
           stop: ${{ matrix.stop }}
 
-      - name: start step
-        if: env.ACTION == 'start' || env.ACTION == 'both'
+      - name: start
+        if: (env.ACTION == 'start' || env.ACTION == 'both') &&
+            (github.event_name == 'pull_request' ||
+             github.event.inputs.service == 'all' ||
+             github.event.inputs.service == matrix.service)
+
         uses: ./.github/actions/service-start
         with:
           dir:   ${{ matrix.dir }}
           copy:  ${{ matrix.copy }}
           start: ${{ matrix.start }}
+
+# PR -> zawsze leci (wszystkie wiersze)
+# ręcznie + all -> j.w.
+# ręcznie + konkretny serwis -> filtrowanie
