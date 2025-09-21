@@ -22,9 +22,12 @@ on:
           
 jobs:
   svc:
-    if: github.event_name == 'pull_request' || # PR -> zawsze leci (wszystkie wiersze)
-        github.event.inputs.service == 'all' || # ręcznie + all -> j.w.
-        github.event.inputs.service == matrix.service # ręcznie + konkretny serwis -> filtrowanie
+    # PR -> zawsze leci (wszystkie wiersze)
+    # ręcznie + all -> j.w.
+    # ręcznie + konkretny serwis -> filtrowanie
+    if: github.event_name == 'pull_request' || 
+        github.event.inputs.service == 'all' || 
+        github.event.inputs.service == matrix.service 
     strategy:
       matrix:
         include:
