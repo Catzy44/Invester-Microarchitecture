@@ -8,110 +8,108 @@ on:
       service:
         description: 'master | processor | scraper | all'
         default: all
-        options: [ all, master, processor, scraper ]
         type: choice
+        options: [ all, master, processor, scraper ]
+
       action:
-        description: "kill | start | restart"
-        required: true
+        description: 'kill | start | restart'
         default: restart
         type: choice
-        options:
-          - kill
-          - start
-          - restart
-          
+        options: [ kill, start, restart ]
+
+env:
+  ACTION: ${{ github.event_name == 'pull_request' && 'restart' || github.event.inputs.action }}
+
+
+steps-template: &svc-steps
+  - name: kill (bash)
+    if: env.ACTION == 'kill' || env.ACTION == 'restart'
+    continue-on-error: true
+    shell: bash
+    working-directory: ${{ env.SVC_DIR }}
+    run: ${{ env.SVC_STOP }}
+
+  - name: kill (cmd)
+    if: env.ACTION == 'kill' || env.ACTION == 'restart'
+    continue-on-error: true
+    shell: cmd
+    working-directory: ${{ env.SVC_DIR }}
+    run: ${{ env.SVC_STOP }}
+    
+    
+  - uses: actions/checkout@v4
+    with:
+      fetch-depth: 0
+      clean: true
+      lfs: true
+
+
+  - name: start
+    if: env.ACTION == 'start' || env.ACTION == 'restart'
+    uses: ./.github/actions/service-start
+    with:
+      dir:   ${{ env.SVC_DIR }}
+      copy:  ${{ env.SVC_COPY }}
+      start: ${{ env.SVC_START }}
+
 jobs:
-  svc:
+  master:
     if: github.event_name == 'pull_request' ||
         github.event.inputs.service == 'all' ||
-        github.event.inputs.service == matrix.service
-    strategy:
-      matrix:
-        include:
-          - service: master
-            dir: master-service
-            stop: 'chmod +x man.sh && ./man.sh stop'
-            copy: 'cp "/opt/actions-runner/application.properties" "src/main/resources"'
-            start: 'chmod +x man.sh && ./man.sh start'
-            runs: [ self-hosted, Linux, master ]
-            
-          - service: processor
-            dir: processor-service
-            stop: 'call killnow.bat'
-            copy: 'copy "C:\actions-runner\application.properties" "src\main\resources\"'
-            start: 'call bootnohup.bat'
-            runs: [ self-hosted, Windows, processor ]
-            
-          - service: scraper
-            dir: scraper-service
-            stop: 'call killnow.bat'
-            copy: 'copy "C:\actions-runner\application.properties" "src\main\resources\"'
-            start: 'call bootnohup.bat'
-            runs: [ self-hosted, Windows, scraper ]
-    runs-on: ${{ matrix.runs }}
+        github.event.inputs.service == 'master'
 
-    # avoid overlapping restarts if several pushes land quickly
+    runs-on: [ self-hosted, Linux, master ]
+
     concurrency:
-      group: restart-${{ matrix.service }}
+      group: restart-master
       cancel-in-progress: true
 
     env:
-      ACTION: ${{ github.event_name == 'pull_request' && 'restart' || github.event.inputs.action }}
+      SVC_DIR:   master-service
+      SVC_STOP:  'chmod +x man.sh && ./man.sh stop'
+      SVC_COPY:  'cp "/opt/actions-runner/application.properties" "src/main/resources"'
+      SVC_START: 'chmod +x man.sh && ./man.sh start'
 
-    steps:
-      #- name: kill
-      #  if: (env.ACTION == 'kill' || env.ACTION == 'restart') &&
-      #      (github.event_name == 'pull_request' ||
-      #       github.event.inputs.service == 'all' ||
-      #       github.event.inputs.service == matrix.service)
+    steps: *svc-steps
+    
+    
+    
+  processor:
+    if: github.event_name == 'pull_request' ||
+        github.event.inputs.service == 'all' ||
+        github.event.inputs.service == 'processor'
 
-      #  uses: ./.github/actions/service-kill
-      #  with:
-      #    dir:  ${{ matrix.dir }}
-      #    stop: ${{ matrix.stop }}
-      # --- KILL (Linux) -----------------------------------------------------
-      - name: kill (bash)
-        if: (env.ACTION == 'kill' || env.ACTION == 'restart') &&
-            (github.event_name == 'pull_request' ||
-            github.event.inputs.service == 'all' ||
-            github.event.inputs.service == matrix.service) &&
-            runner.os != 'Windows'
-        continue-on-error: true
-        shell: bash
-        working-directory: ${{ matrix.dir }}
-        run: ${{ matrix.stop }}
-      
-      # --- KILL (Windows) ---------------------------------------------------
-      - name: kill (cmd)
-        if: (env.ACTION == 'kill' || env.ACTION == 'restart') &&
-            (github.event_name == 'pull_request' ||
-            github.event.inputs.service == 'all' ||
-            github.event.inputs.service == matrix.service) &&
-            runner.os == 'Windows'
-        continue-on-error: true
-        shell: cmd
-        working-directory: ${{ matrix.dir }}
-        run: ${{ matrix.stop }}
-       
-      - uses: actions/checkout@v4
-        with: 
-          ref: ${{ github.sha }} 
-          fetch-depth: 0 
-          clean: true 
-          lfs: true
+    runs-on: [ self-hosted, Windows, processor ]
 
-      - name: start
-        if: (env.ACTION == 'start' || env.ACTION == 'both') &&
-            (github.event_name == 'pull_request' ||
-             github.event.inputs.service == 'all' ||
-             github.event.inputs.service == matrix.service)
+    concurrency:
+      group: restart-processor
+      cancel-in-progress: true
 
-        uses: ./.github/actions/service-start
-        with:
-          dir:   ${{ matrix.dir }}
-          copy:  ${{ matrix.copy }}
-          start: ${{ matrix.start }}
+    env:
+      SVC_DIR:   processor-service
+      SVC_STOP:  'call killnow.bat'
+      SVC_COPY:  'copy "C:\\actions-runner\\application.properties" "src\\main\\resources\\"'
+      SVC_START: 'call bootnohup.bat'
 
-# PR -> zawsze leci (wszystkie wiersze)
-# ręcznie + all -> j.w.
-# ręcznie + konkretny serwis -> filtrowanie
+    steps: *svc-steps
+
+
+    
+  scraper:
+    if: github.event_name == 'pull_request' ||
+        github.event.inputs.service == 'all' ||
+        github.event.inputs.service == 'scraper'
+
+    runs-on: [ self-hosted, Windows, scraper ]
+
+    concurrency:
+      group: restart-scraper
+      cancel-in-progress: true
+
+    env:
+      SVC_DIR:   scraper-service
+      SVC_STOP:  'call killnow.bat'
+      SVC_COPY:  'copy "C:\\actions-runner\\application.properties" "src\\main\\resources\\"'
+      SVC_START: 'call bootnohup.bat'
+
+    steps: *svc-steps
