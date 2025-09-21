@@ -22,6 +22,9 @@ on:
           
 jobs:
   svc:
+    if: github.event_name == 'pull_request' ||
+        github.event.inputs.service == 'all' ||
+        github.event.inputs.service == matrix.service
     strategy:
       matrix:
         include:
