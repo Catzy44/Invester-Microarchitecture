@@ -6,51 +6,19 @@ on:
   workflow_dispatch:
     inputs:
       service:
-        description: 'master | processor | scraper | all'
+        description: master | processor | scraper | all
         default: all
         type: choice
         options: [ all, master, processor, scraper ]
 
       action:
-        description: 'kill | start | restart'
+        description: kill | start | restart
         default: restart
         type: choice
         options: [ kill, start, restart ]
 
 env:
   ACTION: ${{ github.event_name == 'pull_request' && 'restart' || github.event.inputs.action }}
-
-
-steps-template: &svc-steps
-  - name: kill (bash)
-    if: env.ACTION == 'kill' || env.ACTION == 'restart'
-    continue-on-error: true
-    shell: bash
-    working-directory: ${{ env.SVC_DIR }}
-    run: ${{ env.SVC_STOP }}
-
-  - name: kill (cmd)
-    if: env.ACTION == 'kill' || env.ACTION == 'restart'
-    continue-on-error: true
-    shell: cmd
-    working-directory: ${{ env.SVC_DIR }}
-    run: ${{ env.SVC_STOP }}
-    
-    
-  - uses: actions/checkout@v4
-    with:
-      fetch-depth: 0
-      clean: true
-      lfs: true
-
-
-  - name: start
-    if: env.ACTION == 'start' || env.ACTION == 'restart'
-    uses: ./.github/actions/service-start
-    with:
-      dir:   ${{ env.SVC_DIR }}
-      copy:  ${{ env.SVC_COPY }}
-      start: ${{ env.SVC_START }}
 
 jobs:
   master:
@@ -59,57 +27,81 @@ jobs:
         github.event.inputs.service == 'master'
 
     runs-on: [ self-hosted, Linux, master ]
-
     concurrency:
       group: restart-master
       cancel-in-progress: true
 
     env:
       SVC_DIR:   master-service
-      SVC_STOP:  'chmod +x man.sh && ./man.sh stop'
-      SVC_COPY:  'cp "/opt/actions-runner/application.properties" "src/main/resources"'
-      SVC_START: 'chmod +x man.sh && ./man.sh start'
+      SVC_STOP:  chmod +x man.sh && ./man.sh stop
+      SVC_COPY:  cp "/opt/actions-runner/application.properties" "src/main/resources"
+      SVC_START: chmod +x man.sh && ./man.sh start
 
-    steps: *svc-steps
-    
-    
-    
+    steps: &svc-steps
+      # ----- KILL (bash) -----
+      - name: kill (bash)
+        if: env.ACTION == 'kill' || env.ACTION == 'restart'
+        continue-on-error: true
+        shell: bash
+        working-directory: ${{ env.SVC_DIR }}
+        run: ${{ env.SVC_STOP }}
+
+      # ----- KILL (cmd) ------
+      - name: kill (cmd)
+        if: env.ACTION == 'kill' || env.ACTION == 'restart'
+        continue-on-error: true
+        shell: cmd
+        working-directory: ${{ env.SVC_DIR }}
+        run: ${{ env.SVC_STOP }}
+
+      # ----- CHECKOUT --------
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          clean: true
+          lfs: true
+
+      # ----- START -----------
+      - name: start
+        if: env.ACTION == 'start' || env.ACTION == 'restart'
+        uses: ./.github/actions/service-start
+        with:
+          dir:   ${{ env.SVC_DIR }}
+          copy:  ${{ env.SVC_COPY }}
+          start: ${{ env.SVC_START }}
+
   processor:
     if: github.event_name == 'pull_request' ||
         github.event.inputs.service == 'all' ||
         github.event.inputs.service == 'processor'
 
     runs-on: [ self-hosted, Windows, processor ]
-
     concurrency:
       group: restart-processor
       cancel-in-progress: true
 
     env:
       SVC_DIR:   processor-service
-      SVC_STOP:  'call killnow.bat'
-      SVC_COPY:  'copy "C:\\actions-runner\\application.properties" "src\\main\\resources\\"'
-      SVC_START: 'call bootnohup.bat'
+      SVC_STOP:  call killnow.bat
+      SVC_COPY:  copy "C:\\actions-runner\\application.properties" "src\\main\\resources\\"
+      SVC_START: call bootnohup.bat
 
     steps: *svc-steps
 
-
-    
   scraper:
     if: github.event_name == 'pull_request' ||
         github.event.inputs.service == 'all' ||
         github.event.inputs.service == 'scraper'
 
     runs-on: [ self-hosted, Windows, scraper ]
-
     concurrency:
       group: restart-scraper
       cancel-in-progress: true
 
     env:
       SVC_DIR:   scraper-service
-      SVC_STOP:  'call killnow.bat'
-      SVC_COPY:  'copy "C:\\actions-runner\\application.properties" "src\\main\\resources\\"'
-      SVC_START: 'call bootnohup.bat'
+      SVC_STOP:  call killnow.bat
+      SVC_COPY:  copy "C:\\actions-runner\\application.properties" "src\\main\\resources\\"
+      SVC_START: call bootnohup.bat
 
     steps: *svc-steps
