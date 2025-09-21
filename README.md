@@ -28,17 +28,6 @@ Microservices communicate via ⚡**Apache Kafka**⚡.
 
 ---
 
-## Monitored entities (WIP)
-
-| Politicians / Leaders | Institutions / Companies | Innovators |
-|------------------------|--------------------------|------------|
-| Donald Trump           | FED / SEC                | Sam Altman (OpenAI) |
-| Joe Biden              | BlackRock / Vanguard     | Elon Musk (Tesla, SpaceX) |
-| Xi Jinping             | Apple / Nvidia           | Christine Lagarde (ECB) |
-| Vladimir Putin         | —                        | Jerome Powell (FED) |
-
----
-
 ## Technologies
 
 - Java 17 + Spring Boot  
@@ -51,3 +40,5 @@ Microservices communicate via ⚡**Apache Kafka**⚡.
 ---
 
 ## Diagram
+
+<img width="701" height="533" alt="Untitled Diagram(1) drawio" src="https://github.com/user-attachments/assets/e3f8b45c-fa37-4a38-b763-a75629fb8bfc" />
