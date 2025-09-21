@@ -27,9 +27,9 @@ jobs:
         include:
           - service: master
             dir: master-service
-            stop: './man.sh stop'
+            stop: 'chmod +x man.sh && ./man.sh stop'
             copy: 'cp "/opt/actions-runner/application.properties" "src/main/resources"'
-            start: './man.sh start'
+            start: 'chmod +x man.sh && ./man.sh start'
             runs: [ self-hosted, Linux, master ]
             
           - service: processor
