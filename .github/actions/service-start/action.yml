@@ -1,0 +1,30 @@
+# Universal "start" action.
+#  1. checkout current commit
+#  2. copy application.properties from runner
+#  3. run start script
+#
+# Keep it boring, keep it predictable.
+name: universal-start
+inputs:
+  dir:
+    description: relative path to service directory
+    required: true
+  copy:
+    description: command that places application.properties
+    required: true
+  start:
+    description: command that starts the service
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+
+    # copy config; if path changes in the future, tweak matrix not here
+    - shell: ${{ runner.os == 'Windows' && 'cmd' || 'bash' }}
+      working-directory: ${{ inputs.dir }}
+      run: ${{ inputs.copy }}
+
+    - shell: ${{ runner.os == 'Windows' && 'cmd' || 'bash' }}
+      working-directory: ${{ inputs.dir }}
+      run: ${{ inputs.start }}
