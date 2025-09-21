@@ -56,6 +56,13 @@ jobs:
       ACTION: ${{ github.event_name == 'pull_request' && 'both' || github.event.inputs.action }}
 
     steps:
+      - uses: actions/checkout@v4
+        with: 
+          ref: ${{ github.sha }} 
+          fetch-depth: 0 
+          clean: true 
+          lfs: true
+          
       - name: kill
         if: (env.ACTION == 'kill' || env.ACTION == 'both') &&
             (github.event_name == 'pull_request' ||
