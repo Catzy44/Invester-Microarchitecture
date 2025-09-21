@@ -32,6 +32,8 @@ public class MarketEventEntity {
     private int type; // 0 - negatywny wpływ, 1 - pozytywny
     private int impactPrc; // Waga wpływu (0-10)
     private int impactChance; // Waga wpływu (0-10)
+    private int interpretationConfidence;
+    private int surpriseFactor;
     @Column(name="start_timestamp")
     private Timestamp startTimestamp; // Timestamp początku wpływu
     @Column(name="end_timestamp")
