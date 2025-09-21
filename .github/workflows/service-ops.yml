@@ -66,15 +66,29 @@ jobs:
       #  with:
       #    dir:  ${{ matrix.dir }}
       #    stop: ${{ matrix.stop }}
-      - name: kill step
-        if: (env.ACTION == 'kill' || env.ACTION == 'both') &&
-            (github.event_name == 'pull_request' ||
-            github.event.inputs.service == 'all' ||
-            github.event.inputs.service == matrix.service)
-        continue-on-error: true
-        shell: ${{ runner.os == 'Windows' && 'cmd' || 'bash' }}
-        working-directory: ${{ matrix.dir }}
-        run: ${{ matrix.stop }}
+      # --- KILL (Linux) -----------------------------------------------------
+      - name: kill (bash)
+          if: (env.ACTION == 'kill' || env.ACTION == 'restart') &&
+              (github.event_name == 'pull_request' ||
+              github.event.inputs.service == 'all' ||
+              github.event.inputs.service == matrix.service) &&
+              runner.os != 'Windows'
+          continue-on-error: true
+          shell: bash
+          working-directory: ${{ matrix.dir }}
+          run: ${{ matrix.stop }}
+      
+      # --- KILL (Windows) ---------------------------------------------------
+      - name: kill (cmd)
+          if: (env.ACTION == 'kill' || env.ACTION == 'restart') &&
+              (github.event_name == 'pull_request' ||
+              github.event.inputs.service == 'all' ||
+              github.event.inputs.service == matrix.service) &&
+              runner.os == 'Windows'
+          continue-on-error: true
+          shell: cmd
+          working-directory: ${{ matrix.dir }}
+          run: ${{ matrix.stop }}
        
       - uses: actions/checkout@v4
         with: 
