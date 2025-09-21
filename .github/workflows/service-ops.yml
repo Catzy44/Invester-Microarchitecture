@@ -11,14 +11,14 @@ on:
         options: [ all, master, processor, scraper ]
         type: choice
       action:
-        description: "kill | start | both"
+        description: "kill | start | restart"
         required: true
-        default: both
+        default: restart
         type: choice
         options:
           - kill
           - start
-          - both
+          - restart
           
 jobs:
   svc:
@@ -53,26 +53,35 @@ jobs:
       cancel-in-progress: true
 
     env:
-      ACTION: ${{ github.event_name == 'pull_request' && 'both' || github.event.inputs.action }}
+      ACTION: ${{ github.event_name == 'pull_request' && 'restart' || github.event.inputs.action }}
 
     steps:
+      #- name: kill
+      #  if: (env.ACTION == 'kill' || env.ACTION == 'restart') &&
+      #      (github.event_name == 'pull_request' ||
+      #       github.event.inputs.service == 'all' ||
+      #       github.event.inputs.service == matrix.service)
+
+      #  uses: ./.github/actions/service-kill
+      #  with:
+      #    dir:  ${{ matrix.dir }}
+      #    stop: ${{ matrix.stop }}
+      - name: kill step
+        if: (env.ACTION == 'kill' || env.ACTION == 'both') &&
+            (github.event_name == 'pull_request' ||
+            github.event.inputs.service == 'all' ||
+            github.event.inputs.service == matrix.service)
+        continue-on-error: true
+        shell: ${{ runner.os == 'Windows' && 'cmd' || 'bash' }}
+        working-directory: ${{ matrix.dir }}
+        run: ${{ matrix.stop }}
+       
       - uses: actions/checkout@v4
         with: 
           ref: ${{ github.sha }} 
           fetch-depth: 0 
           clean: true 
           lfs: true
-          
-      - name: kill
-        if: (env.ACTION == 'kill' || env.ACTION == 'both') &&
-            (github.event_name == 'pull_request' ||
-             github.event.inputs.service == 'all' ||
-             github.event.inputs.service == matrix.service)
-
-        uses: ./.github/actions/service-kill
-        with:
-          dir:  ${{ matrix.dir }}
-          stop: ${{ matrix.stop }}
 
       - name: start
         if: (env.ACTION == 'start' || env.ACTION == 'both') &&
