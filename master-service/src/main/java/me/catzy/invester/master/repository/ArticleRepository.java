@@ -14,6 +14,6 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
 	public ArticleEntity findByUrl(String url);
 	public List<ArticleEntity> findByEventsIsEmptyAndContentIsNotNullOrderByTimestampDesc();
 	
-	 @Query("SELECT a FROM Article a ORDER BY a.id DESC")
+	 @Query("SELECT a FROM ArticleEntity a ORDER BY a.id DESC")
 	 public List<ArticleEntity> getArticlesChunk(Pageable pageable);
 }

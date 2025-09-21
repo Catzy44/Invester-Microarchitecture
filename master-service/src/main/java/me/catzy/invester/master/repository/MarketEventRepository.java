@@ -26,11 +26,11 @@ public interface MarketEventRepository extends JpaRepository<MarketEventEntity, 
 	@Query("SELECT NEW me.catzy.invester.master.repository.MarketEventRepository$EstimationDTO( " +
 		       "SUM(CASE WHEN me.type = 1 THEN me.impactPrc ELSE 0 END), " +
 		       "SUM(CASE WHEN me.type = 0 THEN me.impactPrc ELSE 0 END)) " +
-		       "FROM MarketEvent me " +
+		       "FROM MarketEventEntity me " +
 		       "WHERE DATE(me.startTimestamp) = DATE(:day) ")
 	public EstimationDTO getDailyEstimation(@Param("day") Timestamp day);
 	
-	@Query("SELECT m FROM MarketEvent m WHERE m.endTimestamp > CURRENT_TIMESTAMP")
+	@Query("SELECT m FROM MarketEventEntity m WHERE m.endTimestamp > CURRENT_TIMESTAMP")
 	public List<MarketEventEntity> getCurrentEvents();
 	
 }
