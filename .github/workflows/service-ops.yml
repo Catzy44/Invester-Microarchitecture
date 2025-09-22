@@ -48,7 +48,7 @@ jobs:
         working-directory: ${{ env.SVC_DIR }}
         run: ${{ env.SVC_STOP }}
 
-      # ----- KILL (cmd) ------
+      # ----- KILL (cmd) ------ 
       - name: kill (cmd)
         if: env.ACTION == 'kill' || env.ACTION == 'restart'
         continue-on-error: true
