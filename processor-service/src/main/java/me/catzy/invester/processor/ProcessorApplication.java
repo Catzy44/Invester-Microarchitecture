@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +35,7 @@ public class ProcessorApplication {
 			e.printStackTrace();
 		}
 		SpringApplication application = new SpringApplication(new Class[] { ProcessorApplication.class });
+		application.setWebApplicationType(WebApplicationType.NONE);
 		application.run(args);
 	}
 
