@@ -24,7 +24,7 @@ env:
 
 jobs:
   master:
-    if: ((github.event_name == 'pull_request' || github.event_name == 'pull_request') && contains(github.event.head_commit.message, '#deploy')) ||
+    if: ((github.event_name == 'pull_request' || github.event_name == 'push') && contains(github.event.head_commit.message, '#deploy')) ||
         github.event.inputs.service == 'all' ||
         github.event.inputs.service == 'master'
 
@@ -73,7 +73,7 @@ jobs:
           start: ${{ env.SVC_START }}
 
   processor:
-    if: ((github.event_name == 'pull_request' || github.event_name == 'pull_request') && contains(github.event.head_commit.message, '#deploy')) ||
+    if: ((github.event_name == 'pull_request' || github.event_name == 'push') && contains(github.event.head_commit.message, '#deploy')) ||
         github.event.inputs.service == 'all' ||
         github.event.inputs.service == 'processor'
 
@@ -91,7 +91,7 @@ jobs:
     steps: *svc-steps
 
   scraper:
-    if: ((github.event_name == 'pull_request' || github.event_name == 'pull_request') && contains(github.event.head_commit.message, '#deploy')) ||
+    if: ((github.event_name == 'pull_request' || github.event_name == 'push') && contains(github.event.head_commit.message, '#deploy')) ||
         github.event.inputs.service == 'all' ||
         github.event.inputs.service == 'scraper'
 
