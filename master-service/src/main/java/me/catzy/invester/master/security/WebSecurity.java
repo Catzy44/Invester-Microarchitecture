@@ -18,11 +18,10 @@ public class WebSecurity {
         this.filter = filter;
     }
 
-    @SuppressWarnings("removal")
-	@Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf().disable();
+        http.csrf(csrf -> csrf.disable());
 
         http.authorizeHttpRequests(auth -> auth
                 // pre-flight CORS
