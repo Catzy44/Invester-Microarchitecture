@@ -1,4 +1,10 @@
 name: service-ops
+run-name: >-
+  service-ops * ${{ 
+    (github.event_name == 'workflow_dispatch' && format('{0} • {1}', inputs.action, inputs.service)) || 
+    (github.event_name == 'push' && 'restart * auto (push)') ||
+    (github.event_name == 'pull_request' && 'restart * auto (PR)') 
+    }}
 on:
   push:
     branches: [ master ]
