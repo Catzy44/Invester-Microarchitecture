@@ -1,5 +1,7 @@
 name: service-ops
 on:
+  push:
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -18,11 +20,11 @@ on:
         options: [ kill, start, restart ]
 
 env:
-  ACTION: ${{ github.event_name == 'pull_request' && 'restart' || github.event.inputs.action }}
+  ACTION: ${{ (github.event_name == 'pull_request' || github.event_name == 'push') && 'restart' || github.event.inputs.action }}
 
 jobs:
   master:
-    if: github.event_name == 'pull_request' ||
+    if: ((github.event_name == 'pull_request' || github.event_name == 'pull_request') && contains(github.event.head_commit.message, '#deploy')) ||
         github.event.inputs.service == 'all' ||
         github.event.inputs.service == 'master'
 
@@ -71,7 +73,7 @@ jobs:
           start: ${{ env.SVC_START }}
 
   processor:
-    if: github.event_name == 'pull_request' ||
+    if: ((github.event_name == 'pull_request' || github.event_name == 'pull_request') && contains(github.event.head_commit.message, '#deploy')) ||
         github.event.inputs.service == 'all' ||
         github.event.inputs.service == 'processor'
 
@@ -89,7 +91,7 @@ jobs:
     steps: *svc-steps
 
   scraper:
-    if: github.event_name == 'pull_request' ||
+    if: ((github.event_name == 'pull_request' || github.event_name == 'pull_request') && contains(github.event.head_commit.message, '#deploy')) ||
         github.event.inputs.service == 'all' ||
         github.event.inputs.service == 'scraper'
 
