@@ -40,7 +40,7 @@ jobs:
       SVC_START: chmod +x man.sh && ./man.sh start
 
     steps: &svc-steps
-      # ----- KILL (bash) ----- 
+      # ----- KILL (bash) -----
       - name: kill (bash)
         if: env.ACTION == 'kill' || env.ACTION == 'restart'
         continue-on-error: true
