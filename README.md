@@ -6,6 +6,19 @@ PROJECT REFACTOR IN PROGRESS, PLEASE DON'T MIND THE STRUCTURE.
 
 ---
 
+## Actions
+<img width="335" height="314" alt="image" src="https://github.com/user-attachments/assets/f5cae196-a909-450a-8858-71b337db98cb" />
+
+## Features
+
+- Automatic downloading and parsing of economic news  
+- Sentiment analysis and content classification via AI  
+- Identification and monitoring of influential people and topics  
+- Central dashboard with REST API  
+- Scalability-ready thanks to microservice architecture  
+
+---
+
 ## Architecture
 
 | Microservice        | Main tasks | Requirements |
@@ -18,15 +31,6 @@ Microservices communicate via ⚡**Apache Kafka**⚡.
 
 ---
 
-## Features
-
-- Automatic downloading and parsing of economic news  
-- Sentiment analysis and content classification via AI  
-- Identification and monitoring of influential people and topics  
-- Central dashboard with REST API  
-- Scalability-ready thanks to microservice architecture  
-
----
 
 ## Technologies
 
