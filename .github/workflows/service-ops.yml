@@ -1,9 +1,9 @@
 name: service-ops
 run-name: >-
   service-ops  -  ${{ 
-    (github.event_name == 'workflow_dispatch' && format('{0}  -  {1}', inputs.action, inputs.service)) || 
-    (github.event_name == 'push' && contains(github.event.head_commit.message, '#deploy') && 'restart  -  auto (push)') ||
-    (github.event_name == 'pull_request' && contains(github.event.head_commit.message, '#deploy') && 'restart  -  auto (PR)') ||
+    (github.event_name == 'workflow_dispatch' && format('manual - {0} - {1}', inputs.service, inputs.action)) || 
+    (github.event_name == 'push' && contains(github.event.head_commit.message, '#deploy') && 'auto (push) - all - restart') ||
+    (github.event_name == 'pull_request' && contains(github.event.head_commit.message, '#deploy') && 'auto (PR) - all - restart') ||
     'no operation'
     }}
 on:
