@@ -11,6 +11,7 @@ import me.catzy.invester.processor.infrastructure.ai.lmstudio.LMStudioClient;
 import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.AIMessage;
 import me.catzy.invester.processor.infrastructure.ai.lmstudio.dto.LMStudioAPIResponseParsed;
 import me.catzy.invester.processor.infrastructure.messaging.kafka.ProcessingResultProducer;
+import me.catzy.invester.processor.infrastructure.monitoring.MeasureTime;
 
 @Service
 public class ProcessorService {
@@ -19,6 +20,7 @@ public class ProcessorService {
 	@Autowired private LMStudioClient serviceLM;
 	@Autowired private ProcessingResultProducer resultProducer;
 	
+	@MeasureTime("ProcessorService.process")
 	public void process(List<AIMessage> messages, Long jobPersistenceId) {
 		logger.info("AI processing started");
 		
@@ -38,4 +40,6 @@ public class ProcessorService {
 		logger.error("AI processing FAILED, abanding task");
 		//TODO handle errors - message thru Kafka
 	}
+	
+	
 }
