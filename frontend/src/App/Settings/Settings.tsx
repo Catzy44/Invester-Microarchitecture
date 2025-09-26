@@ -5,69 +5,65 @@ import {mergeArticleFilter, removeArticleFilter} from "../store/slices/articlesF
 import { store } from "../store/store";
 import {mergeMarketEventsFilter, removeMarketEventsFilter} from "../store/slices/marketEventsFiltersSlice.ts";
 import {Article, MarketEvent} from "../App/App.types.tsx";
-import { EntityFilter } from "../store/entitySliceFactory.ts";
+import { FilterSettingProps } from "./Settings.types.tsx";
 
-export function Settings(props) {
-    const marketEventsFilters: EntityFilter<MarketEvent>[] = useSelector((state:any) => state.marketEventsFilters.list)
-    const articlesFilters: EntityFilter<Article>[] = useSelector((state:any) => state.articlesFilters.list)
+function FilterSetting<T>({id, label, unit, selector, mergeAction, removeAction, predicate, }: FilterSettingProps<T>) {
+    const filters = useSelector(selector)
+    const [enabled, setEnabled] = useState(filters.some(f => f.id === id))
+    const [value, setValue] = useState(0)
 
-    const [maxArticleAgeEnabled, setMaxArticleAgeEnabled] = useState(articlesFilters.some(filter => filter.id == 0))
-    const [maxArticleAge, setMaxArticleAge] = useState(0)
     useEffect(() => {
-        const id = 0
-        if(!maxArticleAgeEnabled) {
-            store.dispatch(removeArticleFilter(id))
+        if (!enabled) {
+            store.dispatch(removeAction(id))
+            return
         }
-        store.dispatch(mergeArticleFilter({id: id, filter: (item) => {
-            return new Date(item.timestamp).getTime() > Date.now() - 1000 * 60 * 60 * maxArticleAge
-        }}))
+        store.dispatch(mergeAction({ id, filter: predicate(value) }))
+    }, [enabled, value])
 
-    },[maxArticleAge,maxArticleAgeEnabled])
-
-    const [minArticleChanceEnabled, setMinArticleChanceEnabled] = useState(marketEventsFilters.some(filter => filter.id == 1))
-    const [minArticleChance, setMinArticleChance] = useState(0)
-    useEffect(() => {
-        const id = 1
-        if(!minArticleChance) {
-            store.dispatch(removeMarketEventsFilter(id))
-        }
-        store.dispatch(mergeMarketEventsFilter({id: id, filter: (item: MarketEvent) => {
-            return item.impactChance >= minArticleChance
-        }}))
-
-    },[minArticleChance,minArticleChanceEnabled])
-
-    const [minArticleInfluenceEnabled, setMinArticleInfluenceEnabled] = useState(marketEventsFilters.some(filter => filter.id == 2))
-    const [minArticleInfluence, setMinArticleInfluence] = useState(0)
-    useEffect(() => {
-        const id = 2
-        if(!minArticleInfluence) {
-            store.dispatch(removeMarketEventsFilter(id))
-        }
-        store.dispatch(mergeMarketEventsFilter({id: id, filter: (item: MarketEvent) => {
-            return item.impactPrc >= minArticleInfluence
-        }}))
-
-    },[minArticleInfluence,minArticleInfluenceEnabled])
-
-    return <div className={s.applicableEventsSelector}>
+    return (
         <div>
-            <input type="checkbox" checked={maxArticleAgeEnabled} onChange={ev=>setMaxArticleAgeEnabled(ev.target.checked)}/>
-            <span>max wiek</span>
-            <input type="number" value={maxArticleAge} onChange={ev => setMaxArticleAge(parseInt(ev.target.value))}/>
-            <span>godziny</span>
+            <input type="checkbox" checked={enabled} onChange={ev => setEnabled(ev.target.checked)}/>
+            <span>{label}</span>
+            <input type="number" value={value} onChange={ev => setValue(parseInt(ev.target.value) || 0)}/>
+            <span>{unit}</span>
         </div>
-        <div>
-            <input type="checkbox" checked={minArticleChanceEnabled} onChange={ev=>setMinArticleChanceEnabled(ev.target.checked)}/>
-            <span>min celność</span>
-            <input type="number" value={minArticleChance} onChange={ev => setMinArticleChance(parseInt(ev.target.value))}/>
-            <span>%</span>
+    )
+}
+
+export function Settings() {
+    return (
+        <div className={s.applicableEventsSelector}>
+            <FilterSetting<Article>
+                id={0}
+                label="max wiek"
+                unit="godziny"
+                selector={state => state.articlesFilters.list}
+                mergeAction={mergeArticleFilter}
+                removeAction={removeArticleFilter}
+                predicate={val => item =>
+                    new Date(item.timestamp).getTime() >
+                    Date.now() - 1000 * 60 * 60 * val}
+            />
+
+            <FilterSetting<MarketEvent>
+                id={1}
+                label="min celność"
+                unit="%"
+                selector={state => state.marketEventsFilters.list}
+                mergeAction={mergeMarketEventsFilter}
+                removeAction={removeMarketEventsFilter}
+                predicate={val => item => item.impactChance >= val}
+            />
+
+            <FilterSetting<MarketEvent>
+                id={2}
+                label="min wpływ na rynek"
+                unit="%"
+                selector={state => state.marketEventsFilters.list}
+                mergeAction={mergeMarketEventsFilter}
+                removeAction={removeMarketEventsFilter}
+                predicate={val => item => item.impactPrc >= val}
+            />
         </div>
-        <div>
-            <input type="checkbox" checked={minArticleInfluenceEnabled} onChange={ev=>setMinArticleInfluenceEnabled(ev.target.checked)}/>
-            <span>min wpływ na rynek</span>
-            <input type="number" value={minArticleInfluence} onChange={ev => setMinArticleInfluence(parseInt(ev.target.value))}/>
-            <span>%</span>
-        </div>
-    </div>
+    )
 }
