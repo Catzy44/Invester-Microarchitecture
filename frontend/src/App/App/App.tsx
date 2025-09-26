@@ -7,7 +7,7 @@ import { Article } from "./App.types.tsx";
 import { useSelector } from "react-redux"
 import { BrowserRouter, Route, Routes } from "react-router";
 import {NavigationPanelEl} from "../NavigationPanel/NavigationPanel.tsx";
-import {AllEventsTable} from "../MarketEventsPresenter/AllEventsTable.tsx";
+import {NewsTable} from "../NewsTable/NewsTable.tsx";
 import {mergeMarketEvents} from "../store/slices/marketEventsSlice.ts";
 import s from "./App.module.scss"
 
@@ -60,11 +60,11 @@ function App() {
             <div>
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<AllEventsTable/>}/>
-                        <Route path="/p/dashboard" element={<AllEventsTable/>}/>
-                        <Route path="/p/articles" element={<AllEventsTable/>}/>
-                        <Route path="/p/graphs" element={<AllEventsTable/>}/>
-                        <Route path="/*" element={<AllEventsTable/>}/>
+                        <Route path="/" element={<NewsTable/>}/>
+                        <Route path="/p/dashboard" element={<NewsTable/>}/>
+                        <Route path="/p/articles" element={<NewsTable/>}/>
+                        <Route path="/p/graphs" element={<NewsTable/>}/>
+                        <Route path="/*" element={<NewsTable/>}/>
                     </Routes>
                 </BrowserRouter>
             </div>
@@ -100,8 +100,8 @@ function App() {
     //
     // return <div className={s.main}>
     //     <div>
-    //         <Settings {...pass}/>
-    //         <AllEventsTable {...pass}/>
+    //         <Filters {...pass}/>
+    //         <NewsTable {...pass}/>
     //     </div>
     //     <div>
     //         <ProcStats/>

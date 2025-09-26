@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
-import s from "./Settings.module.scss";
+import s from "./Filters.module.scss";
 import {useEffect, useState } from "react";
 import {mergeArticleFilter, removeArticleFilter} from "../store/slices/articlesFiltersSlice.ts";
 import { store } from "../store/store";
 import {mergeMarketEventsFilter, removeMarketEventsFilter} from "../store/slices/marketEventsFiltersSlice.ts";
 import {Article, MarketEvent} from "../App/App.types.tsx";
-import { FilterSettingProps } from "./Settings.types.tsx";
+import { FilterSettingProps } from "./Filters.types.tsx";
 
 function FilterSetting<T>({id, label, unit, selector, mergeAction, removeAction, predicate, }: FilterSettingProps<T>) {
     const filters = useSelector(selector)
@@ -30,7 +30,7 @@ function FilterSetting<T>({id, label, unit, selector, mergeAction, removeAction,
     )
 }
 
-export function Settings() {
+export function Filters() {
     return (
         <div className={s.applicableEventsSelector}>
             <FilterSetting<Article>
@@ -40,9 +40,13 @@ export function Settings() {
                 selector={state => state.articlesFilters.list}
                 mergeAction={mergeArticleFilter}
                 removeAction={removeArticleFilter}
-                predicate={val => item =>
-                    new Date(item.timestamp).getTime() >
-                    Date.now() - 1000 * 60 * 60 * val}
+                predicate={val => {
+                    return function(item: Article) {
+                        const itemTime = new Date(item.timestamp).getTime()
+                        const limit = Date.now() - 1000 * 60 * 60 * val
+                        return itemTime > limit
+                    }
+                }}
             />
 
             <FilterSetting<MarketEvent>
@@ -52,7 +56,11 @@ export function Settings() {
                 selector={state => state.marketEventsFilters.list}
                 mergeAction={mergeMarketEventsFilter}
                 removeAction={removeMarketEventsFilter}
-                predicate={val => item => item.impactChance >= val}
+                predicate={val => {
+                    return (item: MarketEvent) => {
+                        return item.impactChance >= val
+                    }
+                }}
             />
 
             <FilterSetting<MarketEvent>
@@ -62,7 +70,11 @@ export function Settings() {
                 selector={state => state.marketEventsFilters.list}
                 mergeAction={mergeMarketEventsFilter}
                 removeAction={removeMarketEventsFilter}
-                predicate={val => item => item.impactPrc >= val}
+                predicate={val => {
+                    return (item: MarketEvent) => {
+                        return item.impactPrc >= val
+                    }
+                }}
             />
         </div>
     )

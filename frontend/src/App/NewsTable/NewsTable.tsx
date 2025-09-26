@@ -2,12 +2,12 @@ import {useEffect, useMemo, useState} from "react";
 import {Article, MarketEvent, MarketEventType} from "../App/App.types.tsx";
 import {fet} from "../App/Utils.tsx";
 import {formatDate, formatTimeLeft, marketColor, parseDate} from "../App/App.Utils.tsx";
-import s from "./AllEventsTable.module.scss";
-import { starsFromNum } from "./AllEventsTable.Utils.tsx";
+import s from "./NewsTable.module.scss";
+import { starsFromNum } from "./NewsTable.Utils.tsx";
 import {useSelector} from "react-redux";
 import {filterSlice} from "../store/store.ts";
 
-export function AllEventsTable(props) {
+export function NewsTable(props) {
 
     const articles = useSelector((state:any) => state.articles.list)
     const articlesFilters = useSelector((state:any) => state.articlesFilters.list)

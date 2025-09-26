@@ -1,4 +1,4 @@
-import s from "./AllEventsTable.module.scss";
+import s from "./NewsTable.module.scss";
 import {ReactElement} from "react";
 
 export function starsFromNum(val: number): ReactElement {
