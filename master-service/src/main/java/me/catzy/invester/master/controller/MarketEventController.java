@@ -53,7 +53,7 @@ public class MarketEventController extends GenericController<MarketEventEntity, 
 	
 	@GetMapping("/metrics")
 	public int getTimeSpentOnProcessing() {
-		//return service.getTimeSpentOnProcessingPrc();
+		////return service.getTimeSpentOnProcessingPrc();
 		return 0;
 	}
 	
