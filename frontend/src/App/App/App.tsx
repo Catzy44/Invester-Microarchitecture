@@ -15,11 +15,6 @@ import s from "./App.module.scss"
 function App() {
 
     useEffect(() => {
-        store.dispatch(mergeArticleFilter({id: 1, filter: (item : Article, index, array) => {
-            return new Date(item.timestamp).getTime() > Date.now() - 1000 * 60 * 60*24;
-        }}))
-
-
         const loadArticles = () => fet(`articles`).then(res=>{
             store.dispatch(mergeArticles(res))
         })
