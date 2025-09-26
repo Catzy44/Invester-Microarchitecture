@@ -4,10 +4,6 @@
 
 ---
 
-## Actions
-Project deploys automically if commit message contains "#deploy" string.
-
-<img width="335" height="314" alt="image" src="https://github.com/user-attachments/assets/f5cae196-a909-450a-8858-71b337db98cb" />
 
 ## Features
 
@@ -15,7 +11,12 @@ Project deploys automically if commit message contains "#deploy" string.
 - Sentiment analysis and content classification via AI  
 - Identification and monitoring of influential people and topics  
 - Central dashboard with REST API  
-- Scalability-ready thanks to microservice architecture  
+- Scalability-ready thanks to microservice architecture
+
+## Actions
+Project deploys automically if commit message contains "#deploy" string.
+
+<img width="335" height="314" alt="image" src="https://github.com/user-attachments/assets/f5cae196-a909-450a-8858-71b337db98cb" />
 
 ---
 
