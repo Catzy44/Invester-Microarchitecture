@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import {NavigationPanelEl} from "../NavigationPanel/NavigationPanel.tsx";
 import {AllEventsTable} from "../MarketEventsPresenter/AllEventsTable.tsx";
 import {mergeMarketEvents} from "../store/slices/marketEventsSlice.ts";
+import s from "./App.module.scss"
 
 
 function App() {
@@ -57,8 +58,8 @@ function App() {
 
 
 
-    return <div className={`flex flex-row wfull justify-center `}>
-        <div className={`flex flex-row`}>
+    return <div className={`${s.background} flex flex-row wfull justify-center bg-slate-950 pattern-cross pattern pattern-bg-white pattern-size-6 pattern-opacity-20`}>
+        <div className={`flex flex-row gap-2`}>
 
             <NavigationPanelEl/>
             <div>

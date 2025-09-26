@@ -36,12 +36,12 @@ function ArticleRowTr({ article, index }: { article: Article,index: number }) {
     }
 
     return <>
-        <tr>
+        <tr className={`bg-zinc-800`}>
             <th colSpan={5}><a href={article.url}>{article.title}</a></th>
             <td>{formatDate(article.timestamp)}</td>
             <td>Wiek: {formatTimeLeft(new Date(article.timestamp),new Date())}</td>
         </tr>
-        <tr className={s.titleRow}>
+        <tr className={`${s.titleRow} bg-zinc-800`}>
             <th>celność</th>
             <th>typ</th>
 

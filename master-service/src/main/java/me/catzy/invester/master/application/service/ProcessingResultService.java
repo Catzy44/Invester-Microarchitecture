@@ -14,12 +14,11 @@ import me.catzy.invester.master.application.factory.MarketEventFactory;
 import me.catzy.invester.master.domain.ArticleProcessingJobEntity;
 import me.catzy.invester.master.domain.MarketEventEntity;
 import me.catzy.invester.master.repository.ArticleProcessingJobRepository;
-import me.catzy.invester.master.repository.MarketEventRepository;
 
 @Service
 public class ProcessingResultService {
 	@Autowired MarketEventFactory factory;
-	@Autowired MarketEventRepository repo;
+	@Autowired MarketEventService service;
 	@Autowired ArticleProcessingJobRepository jobPersistentRepo;
 	@Autowired ProcessingJobService serviceJob;
 	
@@ -34,7 +33,7 @@ public class ProcessingResultService {
 				e.setArticle(persistentJob.getArticle());
 			}
 			
-			Stream.of(marketEvents).forEach(entity -> repo.save(entity));
+			Stream.of(marketEvents).forEach(entity -> service.save(entity));
 			
 		} catch (JsonProcessingException e) {
 			logger.error("AIProcessingResult JSON parsing FAILED!");

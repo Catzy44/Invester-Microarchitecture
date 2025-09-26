@@ -52,7 +52,6 @@ public abstract class GenericController<T, ID> {
     	return service.patchMultiple(list).map(e->wrap(e)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
     
-    @SuppressWarnings({ "removal", "deprecation" })
 	private Object wrap(List<T> obj) {
     	if(obj.size() == 0) {
     		return ResponseEntity.ok(obj);
@@ -67,7 +66,7 @@ public abstract class GenericController<T, ID> {
 		} catch (RuntimeException e) {}
 		return obj;
     }
-    @SuppressWarnings({ "removal", "deprecation" })
+	
 	private Object wrap(T obj) {
 		try {
 			Class<?> viewClass = getJsonViewForEntity(obj.getClass());

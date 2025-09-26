@@ -9,17 +9,16 @@ import me.catzy.invester.master.domain.ArticleEntity;
 import me.catzy.invester.master.domain.ArticleProcessingJobEntity;
 import me.catzy.invester.master.infrastructure.messaging.kafka.ProcessingJobProducer;
 import me.catzy.invester.master.repository.ArticleProcessingJobRepository;
-import me.catzy.invester.master.repository.ArticleRepository;
 
 @Service
 public class ProcessingJobService {
 	@Autowired ProcessingJobFactory factory;
 	@Autowired ProcessingJobProducer producer;
 	@Autowired ArticleProcessingJobRepository jobPersistentRepo;
-	@Autowired ArticleRepository articleRepo;
+	@Autowired ArticleService service;
 	
 	public void handleRawArticle(ArticleEntity a) {
-		a = articleRepo.save(a);
+		a = service.save(a);
 		processArticle(a);
 	}
 	

@@ -1,7 +1,7 @@
 import {ReactNode} from "react";
 
 export function NavigationPanelEl(props): ReactNode {
-    return <div className={`color bg-gray-800 min-w-3xs`}>
+    return <div className={`color bg-zinc-800 min-w-3xs`}>
         <Section name={"Filtrowanie"}>
             <Option>Całe Artykuły</Option>
             <Option>Poszczególne wydarzenia</Option>
@@ -24,11 +24,11 @@ export function NavigationPanelEl(props): ReactNode {
 
 function Section(props): ReactNode {
     return <div className={`flex flex-col`}>
-        <div className={`grow px-3 bg-gray-900`}>{props.name}</div>
+        <div className={`grow px-3 py-1 bg-zinc-600 uppercase text-xs`}>{props.name}</div>
         {props.children}
     </div>
 }
 
 function Option(props): ReactNode{
-    return <div className={`p-3`}>{props.children}</div>
+    return <div className={`p-3 text-base`}>{props.children}</div>
 }
