@@ -1,0 +1,54 @@
+@import '../../montserrat.css';
+
+* {
+  box-sizing: border-box;
+}
+
+.starsDark {
+  color: rgba(255, 255, 255, 0.51)
+}
+
+table.main {
+
+  tr {//#242424
+    background-color: rgba(52, 52, 52, 0.35);
+
+    &.spacer {
+      background-color: unset !important;
+      height: 10px;
+    }
+    &.titleRow {
+      th,td {
+        color: rgba(255, 255, 255, 0.46);
+        font-weight: normal;
+        padding: 0 5px;
+      }
+    }
+
+    &:nth-child(odd) th{
+
+    }
+    &:nth-child(even) th,&:nth-child(even) td{
+
+    }
+
+    &.positive {
+      background-color: rgba(0, 255, 21, 0.63);
+    }
+    &.negative {
+      background-color: rgba(255, 0, 0, 0.63);
+    }
+
+    th,td {
+      color:white;
+
+      a {
+        text-decoration: underline;
+        color:white;
+      }
+    }
+    td {
+      padding: 0 10px;
+    }
+  }
+}

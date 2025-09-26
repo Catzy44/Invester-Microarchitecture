@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public abstract class GenericController<T, ID> {
-    private final GenericService<T, ID> service;
+    protected final GenericService<T, ID> service;
 
     public GenericController(GenericService<T, ID> service) {
         this.service = service;

@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class GenericServiceImpl<T, ID> implements GenericService<T, ID> {
-    private final JpaRepository<T, ID> repository;
+    protected final JpaRepository<T, ID> repository;
     @Autowired private ObjectMapper objectMapper;
 
     public GenericServiceImpl(JpaRepository<T, ID> repository) {

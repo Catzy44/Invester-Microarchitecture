@@ -1,0 +1,20 @@
+@import '../../montserrat.css';
+
+* {
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.main {
+
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+}

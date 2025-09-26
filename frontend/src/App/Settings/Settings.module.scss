@@ -1,0 +1,14 @@
+div.applicableEventsSelector {
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+  > div {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  input[type=number] {
+    width: 50px
+  }
+}

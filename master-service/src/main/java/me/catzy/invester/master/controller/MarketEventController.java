@@ -26,8 +26,10 @@ import me.catzy.invester.master.repository.MarketEventRepository.EstimationDTO;
 @RequestMapping({ "/marketEvents"})
 public class MarketEventController extends GenericController<MarketEventEntity, Long>{
 	public MarketEventController(MarketEventService service) {
+		this.service = service;
 		super(service);
 	}
+	private MarketEventService service;
 	@Autowired MarketEventRepository repo;
 	
 	@AllArgsConstructor
@@ -53,5 +55,10 @@ public class MarketEventController extends GenericController<MarketEventEntity, 
 	public int getTimeSpentOnProcessing() {
 		//return service.getTimeSpentOnProcessingPrc();
 		return 0;
+	}
+	
+	@GetMapping("chid")
+	public int getChId() {
+		return service.getChid();
 	}
 }

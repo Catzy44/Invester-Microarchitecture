@@ -51,4 +51,9 @@ public class ArticleController extends GenericController<ArticleEntity, Long> {
 		Pageable pageable = PageRequest.of(data.getIndex(), 25 * data.getCount(), Sort.by("id").descending());
 		return repo.getArticlesChunk(pageable);
 	}
+	
+	@GetMapping("chid")
+	public int getChId() {
+		return service.getChid();
+	}
 }
