@@ -58,7 +58,7 @@ function App() {
 
 
 
-    return <div className={`${s.background} flex flex-row wfull justify-center bg-slate-950 pattern-cross pattern pattern-bg-white pattern-size-6 pattern-opacity-20`}>
+    return <div className={`${s.background} flex flex-row wfull justify-center bg-slate-500 pattern-cross pattern pattern-bg-white pattern-size-6 pattern-opacity-20`}>
         <div className={`flex flex-row gap-2`}>
 
             <NavigationPanelEl/>

@@ -35,13 +35,15 @@ function ArticleRowTr({ article, index }: { article: Article,index: number }) {
         //return null
     }
 
+    const segmentClasses = `bg-zinc-800`
+
     return <>
-        <tr className={`bg-zinc-800`}>
-            <th colSpan={5}><a href={article.url}>{article.title}</a></th>
+        <tr className={` ${segmentClasses}`}>
+            <th colSpan={5}><a className={`px-2`} href={article.url}>{article.title}</a></th>
             <td>{formatDate(article.timestamp)}</td>
             <td>Wiek: {formatTimeLeft(new Date(article.timestamp),new Date())}</td>
         </tr>
-        <tr className={`${s.titleRow} bg-zinc-800`}>
+        <tr className={`${s.titleRow}  ${segmentClasses}`}>
             <th>celność</th>
             <th>typ</th>
 
@@ -52,16 +54,16 @@ function ArticleRowTr({ article, index }: { article: Article,index: number }) {
             <th>koniec wpływu</th>
             <th>czas do końca wpływu</th>
         </tr>
-        {filtered.map((marketEvent: MarketEvent) =><MarketEventRow marketEvent={marketEvent} key={marketEvent.id}/>)}
+        {filtered.map((marketEvent: MarketEvent) =><MarketEventRow marketEvent={marketEvent} key={marketEvent.id} segmentClasses={segmentClasses}/>)}
         <tr className={s.spacer}></tr>
     </>
 }
 
-export function MarketEventRow({marketEvent}: {marketEvent: MarketEvent}) {
+export function MarketEventRow({marketEvent,segmentClasses}: {marketEvent: MarketEvent,segmentClasses:string}) {
 
     const color = marketColor(marketEvent)
 
-    return <tr key={marketEvent.id} className={marketEvent.type == MarketEventType.Pozytywny ? s.positive : s.negative} style={{backgroundColor:color.hexColor}}>
+    return <tr key={marketEvent.id} className={`${marketEvent.type == MarketEventType.Pozytywny ? s.positive : s.negative} ${segmentClasses}`} style={{backgroundColor:color.hexColor}}>
         <td>{starsFromNum(marketEvent.impactChance/10)}</td>
         <td>{
             marketEvent.type == MarketEventType.Pozytywny
