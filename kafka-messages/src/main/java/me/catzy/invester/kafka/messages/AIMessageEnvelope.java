@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AIMessageEnvelope {
-	private String role = null;
-	private String content = null;
+	private String role;
+	private String content;
 }
