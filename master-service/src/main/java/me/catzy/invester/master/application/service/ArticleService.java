@@ -10,7 +10,7 @@ import me.catzy.invester.master.repository.ArticleRepository;
 @Service
 @Getter
 public class ArticleService extends GenericServiceImpl<ArticleEntity, Long> {
-	private int chid = 0;
+	private long chid = 0;
 	
 	public ArticleService(ArticleRepository repository) {
 		super(repository);

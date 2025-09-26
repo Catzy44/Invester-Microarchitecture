@@ -53,7 +53,7 @@ public class ArticleController extends GenericController<ArticleEntity, Long> {
 	}
 	
 	@GetMapping("chid")
-	public int getChId() {
+	public long getChId() {
 		return service.getChid();
 	}
 }

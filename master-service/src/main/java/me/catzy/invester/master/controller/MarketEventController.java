@@ -58,7 +58,7 @@ public class MarketEventController extends GenericController<MarketEventEntity, 
 	}
 	
 	@GetMapping("chid")
-	public int getChId() {
+	public long getChId() {
 		return service.getChid();
 	}
 }
