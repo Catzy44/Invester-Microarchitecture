@@ -10,7 +10,7 @@ import me.catzy.invester.master.repository.MarketEventRepository;
 @Service
 @Getter
 public class MarketEventService extends GenericServiceImpl<MarketEventEntity, Long> {
-	private int chid = -1;
+	private int chid = 0;
 	
 	public MarketEventService(MarketEventRepository repository) {
 		super(repository);

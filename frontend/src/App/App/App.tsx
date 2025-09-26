@@ -23,11 +23,12 @@ function App() {
             store.dispatch(mergeArticles(res))
         })
 
-        const articlesChid = -1
+        let articlesChid = -1
         const articlesChidChecker = setInterval(()=>{
             fet(`articles/chid`).then(chid =>{
                 if(chid != articlesChid || articlesChid == -1) {
                     loadArticles()
+                    articlesChid = chid
                 }
             })
         },2000)
@@ -37,11 +38,12 @@ function App() {
             store.dispatch(mergeMarketEvents(res))
         })
 
-        const marketEventsChid = -1
+        let marketEventsChid = -1
         const marketEventsChidChecker = setInterval(()=>{
             fet(`articles/chid`).then(chid =>{
                 if(chid != marketEventsChid || marketEventsChid == -1) {
                     loadMarketEvents()
+                    marketEventsChid = chid
                 }
             })
         },2000)
