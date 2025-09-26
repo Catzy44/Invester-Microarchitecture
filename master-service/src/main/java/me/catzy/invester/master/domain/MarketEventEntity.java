@@ -24,7 +24,7 @@ import lombok.Setter;
 @JsonView({me.catzy.invester.master.domain.MarketEventEntity.values.class})
 @NoArgsConstructor
 public class MarketEventEntity {
-	public interface values {}
+	public interface values extends vArticle, ArticleEntity.vid {}
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

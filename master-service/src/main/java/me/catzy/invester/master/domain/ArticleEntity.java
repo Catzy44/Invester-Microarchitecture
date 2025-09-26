@@ -35,10 +35,10 @@ public class ArticleEntity {
 		this.timestamp = timestamp;
 	}
 	
-	public interface values  extends id{}
+	public interface values  extends vid{}
 	
-	public static interface id {}
-	@JsonView({id.class})
+	public static interface vid {}
+	@JsonView({vid.class})
 	@Id
 	@Access(AccessType.PROPERTY)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
