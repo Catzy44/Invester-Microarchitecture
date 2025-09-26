@@ -6,9 +6,11 @@ API jest REST, każdy ENDPOINT jest CRUD i zwraca obiekt lub listę obiektów w 
 
 LISTA ENDPOINTÓW:
  articles - wszystkie artykuły
+ articles/chid - integer zwiększający się przy każdej zmianie w bazie danych artykułów
  articles/{id} - konkretny artykuł z id
  articles/{id}/marketEvents - lista MarketEventów konkretnego artykułu (może być pustą tablicą lub NULL)
  marketEvents - lista wszystkich marketEventów w systemie
+ marketEvents/chid - integer zwiększający się przy każdej zmianie w bazie danych market eventów
  marketEvents/{id} - konkretny marketEvents
  marketEvents/current - lista wsystkich marketEventów aktualnie wpływających na rynek (endTimestamp < teraz)
 
