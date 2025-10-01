@@ -21,7 +21,7 @@ public class ProcessorService {
 	@Autowired private ProcessingResultProducer resultProducer;
 	
 	@MeasureTime("ProcessorService.process")
-	public void process(List<AIMessage> messages, Long jobPersistenceId) {
+	public void process(List<AIMessage> messages, Long jobPersistenceId) throws Exception {
 		logger.info("AI processing started");
 		
 		for (int i = 0; i < AI_PROCESSING_RETRIES; i++) {
@@ -38,8 +38,8 @@ public class ProcessorService {
 			}
 		}
 		logger.error("AI processing FAILED, abanding task");
-		//TODO handle errors - message thru Kafka
+		
+		//TODO handle errors - message thru Kafka | SOLVED - throw exception through consumer 
+		throw new Exception("3 failed attemps");
 	}
-	
-	
 }

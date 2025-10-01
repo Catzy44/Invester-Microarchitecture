@@ -17,7 +17,7 @@ public class ProcessingJobConsumer {
 	@Autowired ProcessorService service;
 	
 	@KafkaListener(topics = "processing-job")
-	public void onMarketEvent(AIProcessingJobEnvelope job) {
+	public void onMarketEvent(AIProcessingJobEnvelope job) throws Exception {
 		List<AIMessageEnvelope> messages = job.getMessages();
 		
 		service.process(messages.stream().map(env -> new AIMessage(env.getRole(), env.getContent(), null)).toList(), job.getPersistentJobId());

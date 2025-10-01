@@ -12,7 +12,7 @@ export function NewsTable(props) {
     const articles = useSelector((state:any) => state.articles.list)
     const articlesFilters = useSelector((state:any) => state.articlesFilters.list)
     const filtered = filterSlice(articles,articlesFilters)
-    const sorted = filtered.sort((a: Article,b: Article) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+    const sorted = [...filtered].sort((a: Article, b: Article) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
 
 
     return <table className={s.main}>
@@ -22,7 +22,7 @@ export function NewsTable(props) {
     </table>
 }
 
-function ArticleRowTr({ article, index }: { article: Article,index: number }) {
+function ArticleRowTr({ article, index } : { article: Article, index: number }) {
 
     const events = useSelector((state:any) => state.marketEvents.list)
     const eventsThisArticle = events.filter((event: MarketEvent)=> event.article.id == article.id)
