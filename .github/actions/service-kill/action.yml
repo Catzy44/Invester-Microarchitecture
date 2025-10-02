@@ -1,9 +1,4 @@
-# Universal "kill" action for our self‑hosted micro‑services.
-# Intentionally simple: just cd into the service dir and run the stop script.
-#
-# NOTE:
-#  * Works on both Linux and Windows (runner.os switch).
-#  * No checkout, no extra deps – keep it lean.
+#works on both Linux and Windows (runner.os switch)
 name: universal-kill
 inputs:
   dir:

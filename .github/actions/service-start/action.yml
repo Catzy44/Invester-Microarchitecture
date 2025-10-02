@@ -1,9 +1,3 @@
-# Universal "start" action.
-#  1. checkout current commit
-#  2. copy application.properties from runner
-#  3. run start script
-#
-# Keep it boring, keep it predictable.
 name: universal-start
 inputs:
   dir:
