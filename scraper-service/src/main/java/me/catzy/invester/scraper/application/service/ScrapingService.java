@@ -55,7 +55,7 @@ public class ScrapingService {
 	}
 	
 	
-	@Scheduled(fixedRate = 5, initialDelay = 1, timeUnit = TimeUnit.MINUTES)
+	@Scheduled(fixedRate = 2, initialDelay = 1, timeUnit = TimeUnit.MINUTES)
 	public void checkForAnyNews() throws MalformedURLException, Exception {
 		logger.info("checking for news...");
 
