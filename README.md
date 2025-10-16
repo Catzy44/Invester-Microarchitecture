@@ -13,6 +13,11 @@
 - Central dashboard with REST API  
 - Scalability-ready thanks to microservice architecture
 
+
+## Diagram
+
+<img width="701" height="533" alt="Untitled Diagram(1) drawio" src="https://github.com/user-attachments/assets/e3f8b45c-fa37-4a38-b763-a75629fb8bfc" />
+
 ## Actions
 Project deploys automically if commit message contains "#deploy" string.
 
@@ -44,6 +49,3 @@ Microservices communicate via ⚡**Apache Kafka**⚡.
 
 ---
 
-## Diagram
-
-<img width="701" height="533" alt="Untitled Diagram(1) drawio" src="https://github.com/user-attachments/assets/e3f8b45c-fa37-4a38-b763-a75629fb8bfc" />
